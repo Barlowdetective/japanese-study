@@ -9,40 +9,41 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <title>日本語 Study — N4/N5</title>
-<link rel="apple-touch-icon" href="icon.svg"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#1a0a0a;color:#f1f5f9;min-height:100vh;}
 .app{min-height:100vh;background:linear-gradient(160deg,#1a0a0a 0%,#2d0a0a 60%,#1a0a1a 100%);}
-.header{background:rgba(0,0,0,0.5);backdrop-filter:blur(14px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(220,38,38,0.2);position:sticky;top:0;z-index:100;}
-.logo-jp{font-size:20px;font-weight:900;color:#f87171;letter-spacing:2px;}
+.header{background:rgba(0,0,0,0.5);backdrop-filter:blur(14px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(192,57,43,0.25);position:sticky;top:0;z-index:100;}
+.logo-jp{font-size:20px;font-weight:900;color:#e74c3c;letter-spacing:2px;}
 .logo-en{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:1px;}
-.streak-badge{background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);border-radius:20px;padding:4px 10px;font-size:12px;color:#f87171;font-weight:700;}
 .hdr-right{display:flex;align-items:center;gap:8px;}
+.streak-badge{background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.35);border-radius:20px;padding:4px 10px;font-size:12px;color:#e74c3c;font-weight:700;}
 .icon-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.6);font-size:14px;padding:5px 9px;cursor:pointer;}
-.demo-bar{background:rgba(251,191,36,0.08);border-bottom:1px solid rgba(251,191,36,0.15);padding:5px 16px;font-size:11px;color:rgba(255,255,255,0.4);text-align:center;}
-.demo-bar a{color:#fbbf24;text-decoration:none;}
 .progress-bar{height:3px;background:rgba(255,255,255,0.06);}
-.progress-fill{height:100%;background:linear-gradient(90deg,#dc2626,#f87171);transition:width 0.4s;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#c0392b,#e74c3c);transition:width 0.4s;}
+.day-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.06);}
+.day-label{font-size:13px;font-weight:700;color:#e74c3c;}
+.day-nav{display:flex;gap:6px;align-items:center;}
+.day-nav-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:rgba(255,255,255,0.5);padding:4px 12px;cursor:pointer;font-size:12px;font-weight:600;}
+.day-nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
 .tabs{display:flex;padding:0 14px;gap:3px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab-btn{border:none;background:transparent;color:rgba(255,255,255,0.4);padding:11px 14px;font-size:13px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;font-weight:500;}
-.tab-btn.active{color:#f87171;border-bottom-color:#dc2626;font-weight:700;}
-.score-bar{display:flex;align-items:center;justify-content:space-between;padding:7px 16px;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px;color:rgba(255,255,255,0.4);}
+.tab-btn{border:none;background:transparent;color:rgba(255,255,255,0.4);padding:10px 13px;font-size:13px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;font-weight:500;}
+.tab-btn.active{color:#e74c3c;border-bottom-color:#c0392b;font-weight:700;}
+.score-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px;color:rgba(255,255,255,0.4);}
 .score-val{color:#fbbf24;font-weight:700;}
 .content{padding:14px 14px 40px;}
-.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;margin-bottom:12px;}
-/* Flashcard */
-.flashcard-wrap{perspective:1000px;height:200px;cursor:pointer;margin-bottom:14px;}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;margin-bottom:12px;backdrop-filter:blur(6px);}
+.flashcard-wrap{perspective:1000px;height:210px;cursor:pointer;margin-bottom:14px;}
 .flashcard{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.5s;}
 .flashcard.flipped{transform:rotateY(180deg);}
 .fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;}
-.fc-front{background:linear-gradient(135deg,rgba(220,38,38,0.15),rgba(153,27,27,0.1));border:1px solid rgba(220,38,38,0.25);}
-.fc-back{background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(79,70,229,0.1));border:1px solid rgba(99,102,241,0.25);transform:rotateY(180deg);}
-.fc-kanji{font-size:52px;font-weight:900;color:#fff;line-height:1;}
-.fc-reading{font-size:16px;color:rgba(255,255,255,0.5);letter-spacing:2px;}
+.fc-front{background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.25);}
+.fc-back{background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);transform:rotateY(180deg);}
+.fc-kanji{font-size:54px;font-weight:900;color:#fff;line-height:1;}
+.fc-reading{font-size:15px;color:rgba(255,255,255,0.5);letter-spacing:2px;}
 .fc-hint{font-size:12px;color:rgba(255,255,255,0.25);margin-top:4px;}
-.fc-meaning{font-size:24px;font-weight:700;color:#f1f5f9;}
+.fc-meaning{font-size:22px;font-weight:700;color:#f1f5f9;text-align:center;}
 .fc-example{font-size:13px;color:rgba(255,255,255,0.55);text-align:center;line-height:1.6;}
 .fc-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .fc-counter{font-size:13px;color:rgba(255,255,255,0.4);}
@@ -50,428 +51,443 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .fc-nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
 .view-toggle{display:flex;gap:6px;margin-bottom:14px;}
 .vt-btn{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;}
-.vt-btn.active{background:rgba(220,38,38,0.2);border-color:#dc2626;color:#f87171;}
+.vt-btn.active{background:rgba(192,57,43,0.2);border-color:#c0392b;color:#e74c3c;}
 .vocab-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:8px;}
 .vi-kanji{font-size:26px;font-weight:900;color:#fff;min-width:44px;text-align:center;}
 .vi-reading{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:1px;}
 .vi-meaning{font-size:14px;font-weight:600;color:#f1f5f9;}
 .vi-example{font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;line-height:1.5;}
-.speak-btn{background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.25);border-radius:8px;color:#f87171;padding:6px 10px;cursor:pointer;font-size:14px;flex-shrink:0;}
+.speak-btn{background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.25);border-radius:8px;color:#e74c3c;padding:6px 10px;cursor:pointer;font-size:14px;flex-shrink:0;}
 .grammar-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;margin-bottom:14px;}
-.gc-pattern{font-size:18px;font-weight:800;color:#f87171;margin-bottom:6px;}
-.gc-meaning{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:10px;}
+.gc-pattern{font-size:19px;font-weight:800;color:#e74c3c;margin-bottom:5px;}
+.gc-meaning{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:10px;}
 .gc-label{font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
 .gc-example{background:rgba(0,0,0,0.2);border-radius:10px;padding:10px 12px;margin-bottom:6px;}
 .gc-jp{font-size:15px;color:#f1f5f9;line-height:1.6;}
 .gc-en{font-size:13px;color:rgba(255,255,255,0.45);margin-top:3px;}
-.reading-passage{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;margin-bottom:14px;font-size:15px;line-height:2.2;color:#f1f5f9;letter-spacing:0.5px;}
-.quiz-jp{font-size:22px;font-weight:700;color:#fff;margin-bottom:14px;text-align:center;letter-spacing:1px;}
-.quiz-question{font-size:14px;font-weight:600;color:rgba(255,255,255,0.7);margin-bottom:12px;line-height:1.6;}
+.reading-passage{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;margin-bottom:14px;font-size:15px;line-height:2.2;color:#f1f5f9;}
+.quiz-jp{font-size:22px;font-weight:700;color:#fff;margin-bottom:12px;text-align:center;letter-spacing:1px;}
+.quiz-question{font-size:14px;font-weight:600;color:rgba(255,255,255,0.7);margin-bottom:12px;}
 .quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
 .quiz-opt{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;text-align:left;color:#f1f5f9;font-size:14px;cursor:pointer;transition:all 0.2s;width:100%;}
-.quiz-opt:hover{background:rgba(255,255,255,0.1);}
 .quiz-opt.correct{background:rgba(52,211,153,0.15);border-color:#34d399;color:#34d399;}
 .quiz-opt.wrong{background:rgba(248,113,113,0.15);border-color:#f87171;color:#f87171;}
 .quiz-opt:disabled{cursor:not-allowed;}
 .quiz-result{text-align:center;padding:10px;font-size:14px;font-weight:600;border-radius:10px;margin-bottom:10px;}
 .quiz-result.correct{background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.2);}
 .quiz-result.wrong{background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.2);}
-.next-btn{width:100%;background:linear-gradient(135deg,#dc2626,#991b1b);border:none;border-radius:10px;padding:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;}
+.next-btn{width:100%;background:linear-gradient(135deg,#c0392b,#922b21);border:none;border-radius:10px;padding:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;}
 .listen-card{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center;}
-.listen-play-btn{background:linear-gradient(135deg,#dc2626,#991b1b);border:none;border-radius:50px;padding:12px 28px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px;}
-.listen-transcript{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;font-size:15px;color:rgba(255,255,255,0.7);line-height:1.8;text-align:left;display:none;margin-top:10px;}
-.listen-transcript.show{display:block;}
-.show-transcript-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:rgba(255,255,255,0.4);font-size:12px;padding:6px 14px;cursor:pointer;}
-.mark-btn{width:100%;background:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);border-radius:10px;color:#f87171;padding:11px;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px;}
-/* Settings */
-.settings-panel{position:fixed;top:0;right:0;bottom:0;width:280px;background:#1a0a0a;border-left:1px solid rgba(255,255,255,0.08);z-index:200;padding:22px 18px;display:flex;flex-direction:column;gap:14px;transform:translateX(100%);transition:transform 0.3s;}
+.listen-play-btn{background:linear-gradient(135deg,#c0392b,#922b21);border:none;border-radius:50px;padding:12px 28px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px;}
+.show-trans-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:rgba(255,255,255,0.4);font-size:12px;padding:6px 14px;cursor:pointer;}
+.mark-btn{width:100%;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.25);border-radius:10px;color:#e74c3c;padding:11px;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px;}
+.settings-panel{position:fixed;top:0;right:0;bottom:0;width:280px;background:#1a0a0a;border-left:1px solid rgba(255,255,255,0.08);z-index:200;padding:22px 18px;display:flex;flex-direction:column;gap:14px;transform:translateX(100%);transition:transform 0.3s;overflow-y:auto;}
 .settings-panel.open{transform:translateX(0);}
 .settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:199;display:none;}
 .settings-overlay.open{display:block;}
 .s-title{font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
 .s-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;}
-.s-label{font-size:11px;color:rgba(255,255,255,35%);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
-.s-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 12px;color:#f1f5f9;font-size:12px;font-family:monospace;outline:none;}
-.s-btn{width:100%;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid;margin-top:6px;}
+.s-label{font-size:11px;color:rgba(255,255,255,0.4);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
 .s-stat{background:rgba(255,255,255,0.04);border-radius:10px;padding:9px 12px;display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
 .s-stat-val{color:#fbbf24;font-weight:700;}
-.key-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px;background:linear-gradient(160deg,#1a0a0a,#2d0a0a,#1a0a1a);}
-.key-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:26px 22px;width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px;}
-.key-input{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px 44px 12px 16px;color:#f1f5f9;font-size:13px;outline:none;font-family:monospace;transition:border-color 0.2s;}
-.key-input:focus{border-color:#dc2626;}
-.key-save-btn{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;}
-.key-save-btn:disabled{opacity:0.3;cursor:not-allowed;}
-.key-error{font-size:12px;color:#f87171;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:8px 12px;text-align:center;}
+.s-btn{width:100%;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid;margin-top:6px;}
 </style>
 </head>
 <body>
-
-<!-- Key Screen (only shown from GitHub when no key saved) -->
-<div id="keyScreen" style="display:none;">
-  <div class="key-screen">
-    <div style="font-size:60px;margin-bottom:8px">🎌</div>
-    <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:2px;margin-bottom:4px">日本語 STUDY</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:24px">N4 / N5 Daily Japanese Practice</div>
-    <div class="key-card">
-      <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.8">
-        1. Go to <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#f87171">aistudio.google.com/apikey</a><br/>
-        2. Sign in → click <strong style="color:#fff">Create API Key</strong><br/>
-        3. Paste below (starts with <strong style="color:#fbbf24">AIza</strong>)
-      </div>
-      <div style="position:relative">
-        <input class="key-input" id="keyInput" type="password" placeholder="AIzaSy…" oninput="document.getElementById('keySaveBtn').disabled=this.value.length<10"/>
-        <button onclick="var e=document.getElementById('keyInput');e.type=e.type=='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);font-size:16px;">👁</button>
-      </div>
-      <div id="keyError" class="key-error" style="display:none"></div>
-      <button class="key-save-btn" id="keySaveBtn" onclick="saveKeyAndBoot()" disabled>始めましょう！Let's Start →</button>
-      <div style="font-size:11px;color:rgba(255,255,255,0.25);text-align:center">Free tier · Key saved on device only</div>
-    </div>
-  </div>
-</div>
-
-<!-- Settings -->
 <div class="settings-overlay" id="sOverlay" onclick="closeSett()"></div>
 <div class="settings-panel" id="sPanel">
   <div class="s-title"><span>⚙ Settings</span><button class="s-close" onclick="closeSett()">×</button></div>
   <div>
-    <div class="s-label">Stats</div>
-    <div class="s-stat"><span>🔥 Streak</span><span class="s-stat-val" id="stStreak">—</span></div>
-    <div class="s-stat"><span>⭐ Total Score</span><span class="s-stat-val" id="stScore">—</span></div>
+    <div class="s-label">Study Stats</div>
+    <div class="s-stat"><span>🔥 Streak</span><span class="s-stat-val" id="stStreak">0 days</span></div>
+    <div class="s-stat"><span>⭐ Total Score</span><span class="s-stat-val" id="stScore">0 pts</span></div>
+    <div class="s-stat"><span>📅 Current Day</span><span class="s-stat-val" id="stDay">Day 1</span></div>
   </div>
   <div>
-    <div class="s-label">Update Gemini Key</div>
-    <input class="s-input" id="sKeyInp" type="password" placeholder="Paste new key…"/>
-    <button class="s-btn" style="background:rgba(220,38,38,0.15);border-color:#dc2626;color:#f87171" onclick="updateKey()">✓ Update</button>
+    <div class="s-label">🔊 TTS Voice Test</div>
+    <div id="voiceList" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7">Tap ⚙ to check voices</div>
+    <button class="s-btn" style="background:rgba(52,211,153,0.1);border-color:#34d399;color:#34d399" onclick="testSpeak()">▶ Test Japanese Voice</button>
   </div>
-  <div>
-    <div class="s-label">🔊 TTS 语音诊断</div>
-    <div id="voiceList" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7">
-      点击设置按钮加载…
-    </div>
-    <button class="s-btn" style="background:rgba(52,211,153,0.1);border-color:#34d399;color:#34d399;margin-top:6px" onclick="testSpeak()">▶ 测试日语发音</button>
-  </div>
-    <button class="s-btn" style="background:rgba(251,191,36,0.1);border-color:#fbbf24;color:#fbbf24" onclick="newLesson()">🔄 Generate New Lesson</button>
-  </div>
-  <div style="margin-top:auto">
-    <button class="s-btn" style="background:rgba(248,113,113,0.1);border-color:#f87171;color:#f87171" onclick="clearAll()">✕ Clear All Data</button>
+  <div style="margin-top:auto;">
+    <button class="s-btn" style="background:rgba(248,113,113,0.1);border-color:#f87171;color:#f87171" onclick="clearAll()">✕ Reset All Progress</button>
   </div>
 </div>
 
-<!-- App -->
 <div class="app" id="app">
   <div class="header">
-    <div><div class="logo-jp">日本語</div><div class="logo-en">N4 / N5 STUDY</div></div>
+    <div><div class="logo-jp">日本語</div><div class="logo-en">N4 / N5 · 30-DAY COURSE</div></div>
     <div class="hdr-right">
       <div class="streak-badge" id="streakBadge">🔥 0</div>
       <button class="icon-btn" onclick="openSett()">⚙</button>
     </div>
   </div>
-  <div id="demoBanner" class="demo-bar" style="display:none">🎌 Demo mode — tap ⚙ to add your Gemini key for fresh daily AI lessons</div>
   <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+  <div class="day-bar">
+    <span class="day-label" id="dayLabel">📅 Day 1 / 30</span>
+    <div class="day-nav">
+      <button class="day-nav-btn" id="prevDay" onclick="changeDay(-1)">← Prev</button>
+      <button class="day-nav-btn" id="nextDay" onclick="changeDay(1)">Next →</button>
+    </div>
+  </div>
   <div class="tabs">
-    <button class="tab-btn active" id="tb-vocab"    onclick="switchTab('vocab')">📚 Vocab</button>
-    <button class="tab-btn"        id="tb-grammar"  onclick="switchTab('grammar')">📝 Grammar</button>
-    <button class="tab-btn"        id="tb-reading"  onclick="switchTab('reading')">📖 Reading</button>
-    <button class="tab-btn"        id="tb-listening"onclick="switchTab('listening')">🎧 Listening</button>
-    <button class="tab-btn"        id="tb-quiz"     onclick="switchTab('quiz')">✅ Quiz</button>
+    <button class="tab-btn active" id="tb-vocab"     onclick="switchTab('vocab')">📚 Vocab</button>
+    <button class="tab-btn"        id="tb-grammar"   onclick="switchTab('grammar')">📝 Grammar</button>
+    <button class="tab-btn"        id="tb-reading"   onclick="switchTab('reading')">📖 Reading</button>
+    <button class="tab-btn"        id="tb-listening" onclick="switchTab('listening')">🎧 Listening</button>
+    <button class="tab-btn"        id="tb-quiz"      onclick="switchTab('quiz')">✅ Quiz</button>
   </div>
   <div class="score-bar">
     <span>Score: <span class="score-val" id="scoreDisp">0</span> pts</span>
     <span id="dateDisp" style="font-size:11px;color:rgba(255,255,255,0.25)"></span>
   </div>
-  <div class="content" id="content">
-    <div style="text-align:center;padding:60px 20px;color:rgba(255,255,255,0.3)">Loading…</div>
-  </div>
+  <div class="content" id="content"></div>
 </div>
 
 <script>
-// ── Demo data (always available, no API needed) ──
-const DEMO={
+// ═══════════════════════════════════════════════
+// 30-DAY N4/N5 LESSON DATABASE
+// ═══════════════════════════════════════════════
+const LESSONS = [
+// ── DAY 1 ──
+{
   vocab:[
-    {kanji:"食べる",reading:"たべる",meaning:"to eat",example:"毎日ご飯を食べます。",example_en:"I eat rice every day.",type:"verb"},
-    {kanji:"飲む",reading:"のむ",meaning:"to drink",example:"水を飲みます。",example_en:"I drink water.",type:"verb"},
-    {kanji:"行く",reading:"いく",meaning:"to go",example:"学校に行きます。",example_en:"I go to school.",type:"verb"},
-    {kanji:"来る",reading:"くる",meaning:"to come",example:"友達が来ます。",example_en:"My friend comes.",type:"verb"},
-    {kanji:"見る",reading:"みる",meaning:"to see/watch",example:"テレビを見ます。",example_en:"I watch TV.",type:"verb"},
-    {kanji:"大きい",reading:"おおきい",meaning:"big / large",example:"大きい犬がいます。",example_en:"There is a big dog.",type:"adj"},
-    {kanji:"小さい",reading:"ちいさい",meaning:"small / little",example:"小さい猫がいます。",example_en:"There is a small cat.",type:"adj"},
-    {kanji:"友達",reading:"ともだち",meaning:"friend",example:"友達と話します。",example_en:"I talk with my friend.",type:"noun"},
-    {kanji:"電車",reading:"でんしゃ",meaning:"train",example:"電車で行きます。",example_en:"I go by train.",type:"noun"},
-    {kanji:"毎日",reading:"まいにち",meaning:"every day",example:"毎日勉強します。",example_en:"I study every day.",type:"adverb"},
+    {k:"食べる",r:"たべる",m:"to eat",e:"毎日ご飯を食べます。",ee:"I eat rice every day."},
+    {k:"飲む",r:"のむ",m:"to drink",e:"水を飲みます。",ee:"I drink water."},
+    {k:"行く",r:"いく",m:"to go",e:"学校に行きます。",ee:"I go to school."},
+    {k:"来る",r:"くる",m:"to come",e:"友達が来ます。",ee:"My friend comes."},
+    {k:"見る",r:"みる",m:"to see/watch",e:"テレビを見ます。",ee:"I watch TV."},
+    {k:"大きい",r:"おおきい",m:"big",e:"大きい犬がいます。",ee:"There is a big dog."},
+    {k:"小さい",r:"ちいさい",m:"small",e:"小さい猫です。",ee:"It's a small cat."},
+    {k:"友達",r:"ともだち",m:"friend",e:"友達と話します。",ee:"I talk with my friend."},
+    {k:"電車",r:"でんしゃ",m:"train",e:"電車で行きます。",ee:"I go by train."},
+    {k:"毎日",r:"まいにち",m:"every day",e:"毎日勉強します。",ee:"I study every day."},
   ],
   grammar:[
-    {pattern:"〜たい",meaning:"Want to do ~",explanation:"Attach たい to the verb stem (ます form minus ます) to express desire. Conjugates like an i-adjective.",examples:[{jp:"日本に行きたいです。",en:"I want to go to Japan."},{jp:"寿司を食べたい。",en:"I want to eat sushi."}]},
-    {pattern:"〜ている",meaning:"Is doing / ongoing state",explanation:"Attach ている after the te-form of a verb to express an ongoing action or a resulting state.",examples:[{jp:"今、本を読んでいます。",en:"I am reading a book now."},{jp:"彼は結婚しています。",en:"He is married."}]},
-    {pattern:"〜から",meaning:"Because / From",explanation:"から means 'because' (giving a reason) or 'from' (a starting point of time or place).",examples:[{jp:"雨が降っているから、家にいます。",en:"Because it's raining, I'm at home."},{jp:"９時から働きます。",en:"I work from 9 o'clock."}]},
+    {p:"〜たい",m:"Want to do ~",ex:"〜たい attaches to verb stem to express desire.",examples:[{j:"日本に行きたいです。",e:"I want to go to Japan."},{j:"寿司を食べたい。",e:"I want to eat sushi."}]},
+    {p:"〜ている",m:"Is doing / ongoing state",ex:"Te-form + いる shows ongoing action or state.",examples:[{j:"今、本を読んでいます。",e:"I am reading a book now."},{j:"彼は結婚しています。",e:"He is married."}]},
+    {p:"〜から",m:"Because / From",ex:"から can mean 'because' or 'from' (starting point).",examples:[{j:"雨だから、家にいます。",e:"Because it's raining, I'm home."},{j:"9時から働きます。",e:"I work from 9 o'clock."}]},
   ],
-  reading:{
-    title:"私の一日",
-    passage:"私は毎朝６時に起きます。朝ごはんはパンとコーヒーです。それから、電車で会社に行きます。会社は９時から５時までです。昼ごはんは友達と食べます。仕事の後で、スーパーで買い物をします。家に帰って、晩ごはんを作ります。夜はテレビを見て、１１時に寝ます。",
-    translation:"I wake up at 6am every morning. Breakfast is bread and coffee. Then I go to work by train. The office hours are 9 to 5. I eat lunch with friends. After work I shop at the supermarket. I go home and cook dinner. At night I watch TV and sleep at 11pm.",
-    questions:[{question:"What does this person eat for breakfast?",answer:"Bread and coffee",options:["Rice and miso soup","Bread and coffee","Noodles and tea","Eggs and juice"]}]
-  },
+  reading:{title:"私の一日",passage:"私は毎朝6時に起きます。朝ごはんはパンとコーヒーです。電車で会社に行きます。昼ごはんは友達と食べます。夜はテレビを見て、11時に寝ます。",tr:"I wake up at 6am every morning. Breakfast is bread and coffee. I go to work by train. I eat lunch with friends. At night I watch TV and sleep at 11pm.",q:{q:"What time does this person wake up?",a:"6am",opts:["5am","6am","7am","8am"]}},
   listening:[
-    {text:"今日は天気がいいですね。",translation:"The weather is nice today, isn't it?",question:"What is being described?",options:["The food","The weather","The work","The train"],answer:"The weather"},
-    {text:"すみません、駅はどこですか。",translation:"Excuse me, where is the station?",question:"What is the person looking for?",options:["A restaurant","The toilet","The station","A hotel"],answer:"The station"},
-    {text:"このりんごはいくらですか。",translation:"How much is this apple?",question:"What is the person asking about?",options:["The color","The taste","The size","The price"],answer:"The price"},
-    {text:"明日、友達と映画を見に行きます。",translation:"Tomorrow I'm going to see a movie with a friend.",question:"What will the person do tomorrow?",options:["Study Japanese","Go shopping","See a movie","Cook dinner"],answer:"See a movie"},
+    {t:"今日は天気がいいですね。",tr:"The weather is nice today.",q:"What is being described?",opts:["The food","The weather","The work","The train"],a:"The weather"},
+    {t:"すみません、駅はどこですか。",tr:"Excuse me, where is the station?",q:"What is the person looking for?",opts:["Restaurant","Toilet","Station","Hotel"],a:"Station"},
+    {t:"このりんごはいくらですか。",tr:"How much is this apple?",q:"What is being asked?",opts:["Color","Taste","Size","Price"],a:"Price"},
+    {t:"明日、友達と映画を見に行きます。",tr:"Tomorrow I'll see a movie with a friend.",q:"What will the person do tomorrow?",opts:["Study","Shopping","See a movie","Cook"],a:"See a movie"},
   ]
-};
+},
+// ── DAY 2 ──
+{
+  vocab:[
+    {k:"話す",r:"はなす",m:"to speak",e:"日本語で話します。",ee:"I speak in Japanese."},
+    {k:"書く",r:"かく",m:"to write",e:"手紙を書きます。",ee:"I write a letter."},
+    {k:"読む",r:"よむ",m:"to read",e:"本を読みます。",ee:"I read a book."},
+    {k:"聞く",r:"きく",m:"to listen/ask",e:"音楽を聞きます。",ee:"I listen to music."},
+    {k:"買う",r:"かう",m:"to buy",e:"スーパーで野菜を買います。",ee:"I buy vegetables at the supermarket."},
+    {k:"新しい",r:"あたらしい",m:"new",e:"新しい車を買いました。",ee:"I bought a new car."},
+    {k:"古い",r:"ふるい",m:"old",e:"古い建物です。",ee:"It's an old building."},
+    {k:"高い",r:"たかい",m:"expensive/tall",e:"この店は高いです。",ee:"This shop is expensive."},
+    {k:"安い",r:"やすい",m:"cheap",e:"安いレストランです。",ee:"It's a cheap restaurant."},
+    {k:"近い",r:"ちかい",m:"near/close",e:"駅が近いです。",ee:"The station is close."},
+  ],
+  grammar:[
+    {p:"〜てください",m:"Please do ~",ex:"Te-form + ください is used to make polite requests.",examples:[{j:"ここに名前を書いてください。",e:"Please write your name here."},{j:"静かにしてください。",e:"Please be quiet."}]},
+    {p:"〜ましょう",m:"Let's ~ / Shall we ~",ex:"Attach ましょう to verb stem to suggest doing something together.",examples:[{j:"一緒に行きましょう。",e:"Let's go together."},{j:"休みましょう。",e:"Let's rest."}]},
+    {p:"〜ませんか",m:"Would you like to ~?",ex:"Polite invitation form using verb stem + ませんか.",examples:[{j:"映画を見ませんか。",e:"Would you like to watch a movie?"},{j:"一緒に食べませんか。",e:"Would you like to eat together?"}]},
+  ],
+  reading:{title:"週末の計画",passage:"今週末、友達と買い物に行きます。デパートで新しい服を買いたいです。それから、安いレストランで昼ごはんを食べます。電車で行くので、近い駅で待ち合わせます。",tr:"This weekend I'll go shopping with friends. I want to buy new clothes at the department store. After that, we'll eat lunch at a cheap restaurant. Since we're going by train, we'll meet at the nearest station.",q:{q:"Where will they meet?",a:"At the nearest station",opts:["At the department store","At the restaurant","At the nearest station","At home"]}},
+  listening:[
+    {t:"明日は何時に起きますか。",tr:"What time will you wake up tomorrow?",q:"What is being asked?",opts:["Wake up time","Sleep time","Work time","Eat time"],a:"Wake up time"},
+    {t:"このケーキはとても美味しいです。",tr:"This cake is very delicious.",q:"What is being described?",opts:["A drink","A cake","A book","A movie"],a:"A cake"},
+    {t:"図書館はどこですか。",tr:"Where is the library?",q:"What is the person asking about?",opts:["The park","The library","The school","The hospital"],a:"The library"},
+    {t:"来週、日本語のテストがあります。",tr:"There is a Japanese test next week.",q:"When is the test?",opts:["This week","Tomorrow","Next week","Next month"],a:"Next week"},
+  ]
+},
+// ── DAY 3 ──
+{
+  vocab:[
+    {k:"起きる",r:"おきる",m:"to wake up",e:"6時に起きます。",ee:"I wake up at 6."},
+    {k:"寝る",r:"ねる",m:"to sleep/go to bed",e:"11時に寝ます。",ee:"I sleep at 11."},
+    {k:"働く",r:"はたらく",m:"to work",e:"毎日働きます。",ee:"I work every day."},
+    {k:"休む",r:"やすむ",m:"to rest/take a day off",e:"今日は休みます。",ee:"I'll rest today."},
+    {k:"勉強する",r:"べんきょうする",m:"to study",e:"日本語を勉強します。",ee:"I study Japanese."},
+    {k:"楽しい",r:"たのしい",m:"fun/enjoyable",e:"パーティーは楽しかった。",ee:"The party was fun."},
+    {k:"難しい",r:"むずかしい",m:"difficult",e:"この問題は難しい。",ee:"This problem is difficult."},
+    {k:"易しい",r:"やさしい",m:"easy/kind",e:"易しい問題です。",ee:"It's an easy problem."},
+    {k:"面白い",r:"おもしろい",m:"interesting",e:"この本は面白い。",ee:"This book is interesting."},
+    {k:"つまらない",r:"つまらない",m:"boring",e:"つまらない映画でした。",ee:"It was a boring movie."},
+  ],
+  grammar:[
+    {p:"〜なければならない",m:"Must / Have to ~",ex:"Verb negative stem + なければならない expresses obligation.",examples:[{j:"薬を飲まなければなりません。",e:"I must take medicine."},{j:"早く起きなければならない。",e:"I have to wake up early."}]},
+    {p:"〜てもいい",m:"It's okay to ~ / May I ~",ex:"Te-form + もいい grants permission or asks for it.",examples:[{j:"ここに座ってもいいですか。",e:"May I sit here?"},{j:"写真を撮ってもいいです。",e:"You may take photos."}]},
+    {p:"〜てはいけない",m:"Must not ~ / Not allowed to ~",ex:"Te-form + はいけない expresses prohibition.",examples:[{j:"ここでタバコを吸ってはいけません。",e:"You must not smoke here."},{j:"走ってはいけない。",e:"You must not run."}]},
+  ],
+  reading:{title:"日本語の勉強",passage:"私は毎日日本語を勉強しています。日本語は難しいですが、とても面白いです。ひらがなとカタカナは易しかったです。でも、漢字は難しいです。毎日30分勉強すれば、上手になります。",tr:"I study Japanese every day. Japanese is difficult but very interesting. Hiragana and katakana were easy. But kanji is difficult. If you study 30 minutes every day, you'll improve.",q:{q:"How does the person feel about Japanese?",a:"Difficult but interesting",opts:["Easy and boring","Difficult but interesting","Easy and interesting","Difficult and boring"]}},
+  listening:[
+    {t:"日本語の勉強は楽しいです。",tr:"Studying Japanese is fun.",q:"How is Japanese study described?",opts:["Difficult","Boring","Fun","Easy"],a:"Fun"},
+    {t:"毎日8時間寝ます。",tr:"I sleep 8 hours every day.",q:"How many hours does the person sleep?",opts:["6 hours","7 hours","8 hours","9 hours"],a:"8 hours"},
+    {t:"今日は仕事を休みました。",tr:"I took the day off work today.",q:"What did the person do today?",opts:["Worked late","Took day off","Studied","Went shopping"],a:"Took day off"},
+    {t:"この映画はとても面白かった。",tr:"This movie was very interesting.",q:"What is described as interesting?",opts:["A book","A game","A movie","A lesson"],a:"A movie"},
+  ]
+},
+// ── DAY 4 ──
+{
+  vocab:[
+    {k:"会う",r:"あう",m:"to meet",e:"友達に会います。",ee:"I meet my friend."},
+    {k:"待つ",r:"まつ",m:"to wait",e:"バスを待ちます。",ee:"I wait for the bus."},
+    {k:"帰る",r:"かえる",m:"to return/go home",e:"家に帰ります。",ee:"I go home."},
+    {k:"出る",r:"でる",m:"to leave/go out",e:"家を出ます。",ee:"I leave home."},
+    {k:"入る",r:"はいる",m:"to enter",e:"部屋に入ります。",ee:"I enter the room."},
+    {k:"暑い",r:"あつい",m:"hot (weather)",e:"今日は暑い。",ee:"It's hot today."},
+    {k:"寒い",r:"さむい",m:"cold (weather)",e:"冬は寒い。",ee:"Winter is cold."},
+    {k:"涼しい",r:"すずしい",m:"cool",e:"朝は涼しい。",ee:"Mornings are cool."},
+    {k:"天気",r:"てんき",m:"weather",e:"今日の天気はいいです。",ee:"Today's weather is good."},
+    {k:"季節",r:"きせつ",m:"season",e:"春が一番好きな季節です。",ee:"Spring is my favorite season."},
+  ],
+  grammar:[
+    {p:"〜と思う",m:"I think that ~",ex:"Plain form + と思う expresses your opinion or belief.",examples:[{j:"明日は雨だと思います。",e:"I think it will rain tomorrow."},{j:"彼は来ないと思う。",e:"I think he won't come."}]},
+    {p:"〜かもしれない",m:"Might / Maybe ~",ex:"Plain form + かもしれない expresses possibility.",examples:[{j:"明日は雪かもしれません。",e:"It might snow tomorrow."},{j:"彼女は怒っているかもしれない。",e:"She might be angry."}]},
+    {p:"〜でしょう",m:"Probably ~ / Right?",ex:"Used to express probability or seek confirmation.",examples:[{j:"明日は晴れでしょう。",e:"It will probably be sunny tomorrow."},{j:"これは田中さんのでしょう？",e:"This is probably Tanaka's, right?"}]},
+  ],
+  reading:{title:"四季",passage:"日本には四つの季節があります。春は桜が咲いてきれいです。夏はとても暑いです。秋は葉が赤くなります。冬は寒くて雪が降ります。私は涼しい秋が一番好きです。",tr:"Japan has four seasons. Spring is beautiful with cherry blossoms. Summer is very hot. In autumn the leaves turn red. Winter is cold with snow. I like cool autumn the most.",q:{q:"Which season does the person like most?",a:"Autumn",opts:["Spring","Summer","Autumn","Winter"]}},
+  listening:[
+    {t:"今日はとても暑いですね。",tr:"It's very hot today, isn't it?",q:"What's the weather like?",opts:["Cold","Rainy","Hot","Windy"],a:"Hot"},
+    {t:"春になったら、花見をしたいです。",tr:"When spring comes, I want to do hanami.",q:"What does the person want to do in spring?",opts:["Go skiing","Do hanami","Go swimming","Stay home"],a:"Do hanami"},
+    {t:"今日の午後、雨が降るでしょう。",tr:"It will probably rain this afternoon.",q:"What will probably happen this afternoon?",opts:["Snow","Rain","Wind","Sunshine"],a:"Rain"},
+    {t:"友達と駅で待ち合わせをしています。",tr:"I'm meeting a friend at the station.",q:"Where are they meeting?",opts:["At school","At the park","At the station","At home"],a:"At the station"},
+  ]
+},
+// ── DAY 5 ──
+{
+  vocab:[
+    {k:"作る",r:"つくる",m:"to make/cook",e:"料理を作ります。",ee:"I cook a meal."},
+    {k:"売る",r:"うる",m:"to sell",e:"店で野菜を売ります。",ee:"I sell vegetables at the shop."},
+    {k:"貸す",r:"かす",m:"to lend",e:"本を貸してください。",ee:"Please lend me a book."},
+    {k:"借りる",r:"かりる",m:"to borrow",e:"図書館で本を借ります。",ee:"I borrow books from the library."},
+    {k:"使う",r:"つかう",m:"to use",e:"スマホを使います。",ee:"I use a smartphone."},
+    {k:"料理",r:"りょうり",m:"cooking/dish",e:"日本料理が好きです。",ee:"I like Japanese food."},
+    {k:"野菜",r:"やさい",m:"vegetables",e:"野菜を食べます。",ee:"I eat vegetables."},
+    {k:"肉",r:"にく",m:"meat",e:"肉は好きじゃないです。",ee:"I don't like meat."},
+    {k:"魚",r:"さかな",m:"fish",e:"魚を料理します。",ee:"I cook fish."},
+    {k:"果物",r:"くだもの",m:"fruit",e:"果物が好きです。",ee:"I like fruit."},
+  ],
+  grammar:[
+    {p:"〜たことがある",m:"Have experienced ~ before",ex:"Ta-form + ことがある expresses past experience.",examples:[{j:"富士山に登ったことがあります。",e:"I have climbed Mt. Fuji before."},{j:"お寿司を食べたことがない。",e:"I have never eaten sushi."}]},
+    {p:"〜ながら",m:"While doing ~",ex:"Verb stem + ながら means doing two things simultaneously.",examples:[{j:"音楽を聞きながら勉強します。",e:"I study while listening to music."},{j:"歩きながら話しましょう。",e:"Let's talk while walking."}]},
+    {p:"〜てから",m:"After doing ~",ex:"Te-form + から means 'after' completing an action.",examples:[{j:"宿題をしてから遊びます。",e:"I'll play after doing my homework."},{j:"手を洗ってから食べてください。",e:"Please eat after washing your hands."}]},
+  ],
+  reading:{title:"料理が好き",passage:"私は料理を作るのが好きです。週末に野菜や肉や魚を使って料理をします。昨日は友達のために日本料理を作りました。友達はとても喜びました。料理は難しいですが、楽しいです。",tr:"I like to cook. On weekends I cook using vegetables, meat and fish. Yesterday I cooked Japanese food for my friends. They were very happy. Cooking is difficult but fun.",q:{q:"When does the person usually cook?",a:"On weekends",opts:["Every day","On weekdays","On weekends","Never"]}},
+  listening:[
+    {t:"冷蔵庫に野菜がたくさんあります。",tr:"There are a lot of vegetables in the fridge.",q:"What is in the fridge?",opts:["Meat","Fish","Vegetables","Fruit"],a:"Vegetables"},
+    {t:"この料理はとても美味しそうですね。",tr:"This dish looks very delicious.",q:"How does the dish look?",opts:["Expensive","Delicious","Spicy","Cold"],a:"Delicious"},
+    {t:"本を読んでから寝ます。",tr:"I sleep after reading a book.",q:"What does the person do before sleeping?",opts:["Watch TV","Study","Read a book","Cook"],a:"Read a book"},
+    {t:"音楽を聞きながら料理をします。",tr:"I cook while listening to music.",q:"What does the person do while cooking?",opts:["Watch TV","Listen to music","Study","Sleep"],a:"Listen to music"},
+  ]
+},
+// ── DAY 6 ──
+{
+  vocab:[
+    {k:"病院",r:"びょういん",m:"hospital",e:"病院に行きます。",ee:"I go to the hospital."},
+    {k:"薬",r:"くすり",m:"medicine",e:"薬を飲みます。",ee:"I take medicine."},
+    {k:"医者",r:"いしゃ",m:"doctor",e:"医者に見てもらいます。",ee:"I get examined by a doctor."},
+    {k:"体",r:"からだ",m:"body",e:"体の調子が悪いです。",ee:"My body feels unwell."},
+    {k:"頭",r:"あたま",m:"head",e:"頭が痛いです。",ee:"I have a headache."},
+    {k:"痛い",r:"いたい",m:"painful/hurts",e:"足が痛い。",ee:"My leg hurts."},
+    {k:"熱",r:"ねつ",m:"fever/temperature",e:"熱があります。",ee:"I have a fever."},
+    {k:"風邪",r:"かぜ",m:"cold (illness)",e:"風邪を引きました。",ee:"I caught a cold."},
+    {k:"元気",r:"げんき",m:"healthy/energetic",e:"元気ですか？",ee:"Are you well?"},
+    {k:"大丈夫",r:"だいじょうぶ",m:"okay/alright",e:"大丈夫ですか？",ee:"Are you okay?"},
+  ],
+  grammar:[
+    {p:"〜そうだ",m:"Looks like ~ / Seems ~",ex:"I-adj stem / Na-adj + そうだ expresses appearance.",examples:[{j:"この料理は美味しそうです。",e:"This food looks delicious."},{j:"彼は疲れそうだ。",e:"He looks tired."}]},
+    {p:"〜すぎる",m:"Too ~ / Excessively ~",ex:"I-adj stem / verb stem + すぎる means too much.",examples:[{j:"この問題は難しすぎます。",e:"This problem is too difficult."},{j:"食べすぎました。",e:"I ate too much."}]},
+    {p:"〜ほうがいい",m:"It's better to ~ / You should ~",ex:"Ta-form + ほうがいい gives advice.",examples:[{j:"早く寝たほうがいいです。",e:"You should sleep early."},{j:"薬を飲んだほうがいい。",e:"You should take medicine."}]},
+  ],
+  reading:{title:"風邪をひいた",passage:"昨日から頭が痛くて、熱もあります。体がとてもだるいです。今日は会社を休んで、病院に行きました。医者は風邪だと言いました。薬を飲んで、早く寝たほうがいいと言われました。",tr:"Since yesterday I have a headache and a fever. My body feels very sluggish. Today I took the day off and went to the hospital. The doctor said it's a cold. I was told to take medicine and sleep early.",q:{q:"What did the doctor say the person has?",a:"A cold",opts:["A fever only","A headache only","A cold","The flu"]}},
+  listening:[
+    {t:"頭が痛いので、薬を飲みました。",tr:"I had a headache so I took medicine.",q:"Why did the person take medicine?",opts:["Stomach ache","Headache","Fever","Cold"],a:"Headache"},
+    {t:"大丈夫ですか？顔色が悪いですよ。",tr:"Are you okay? You look pale.",q:"What does the person look like?",opts:["Happy","Tired","Pale","Angry"],a:"Pale"},
+    {t:"熱が38度あります。",tr:"I have a fever of 38 degrees.",q:"What is the person's temperature?",opts:["37 degrees","38 degrees","39 degrees","40 degrees"],a:"38 degrees"},
+    {t:"早く元気になってください。",tr:"Please get well soon.",q:"What is being wished?",opts:["Good luck","Happy birthday","Get well soon","Safe travels"],a:"Get well soon"},
+  ]
+},
+// ── DAY 7 ──
+{
+  vocab:[
+    {k:"旅行",r:"りょこう",m:"travel/trip",e:"旅行が好きです。",ee:"I like travelling."},
+    {k:"飛行機",r:"ひこうき",m:"airplane",e:"飛行機で行きます。",ee:"I go by airplane."},
+    {k:"ホテル",r:"ほてる",m:"hotel",e:"ホテルに泊まります。",ee:"I stay at a hotel."},
+    {k:"地図",r:"ちず",m:"map",e:"地図を見ます。",ee:"I look at a map."},
+    {k:"切符",r:"きっぷ",m:"ticket",e:"切符を買います。",ee:"I buy a ticket."},
+    {k:"予約",r:"よやく",m:"reservation",e:"ホテルを予約します。",ee:"I make a hotel reservation."},
+    {k:"観光",r:"かんこう",m:"sightseeing",e:"観光をします。",ee:"I go sightseeing."},
+    {k:"写真",r:"しゃしん",m:"photo",e:"写真を撮ります。",ee:"I take photos."},
+    {k:"外国",r:"がいこく",m:"foreign country",e:"外国へ行きたい。",ee:"I want to go abroad."},
+    {k:"パスポート",r:"ぱすぽーと",m:"passport",e:"パスポートを持ちます。",ee:"I have my passport."},
+  ],
+  grammar:[
+    {p:"〜ために",m:"In order to ~ / For the purpose of ~",ex:"Dictionary form + ために expresses purpose.",examples:[{j:"日本語を勉強するために日本に来ました。",e:"I came to Japan to study Japanese."},{j:"健康のために運動します。",e:"I exercise for my health."}]},
+    {p:"〜まで",m:"Until ~ / Up to ~",ex:"Noun + まで indicates a limit of time or place.",examples:[{j:"6時まで働きます。",e:"I work until 6 o'clock."},{j:"駅まで歩きます。",e:"I walk to the station."}]},
+    {p:"〜間に",m:"During ~ / While ~",ex:"Noun/verb + 間に indicates something happens within a time period.",examples:[{j:"夏休みの間に旅行します。",e:"I travel during summer vacation."},{j:"待っている間に本を読みました。",e:"I read a book while waiting."}]},
+  ],
+  reading:{title:"旅行の計画",passage:"来月、友達と沖縄へ旅行します。飛行機のチケットとホテルはもう予約しました。沖縄では海で泳いで、観光をしたいです。きれいな写真もたくさん撮りたいです。旅行がとても楽しみです。",tr:"Next month I'll travel to Okinawa with friends. I've already reserved the plane tickets and hotel. In Okinawa I want to swim in the sea and go sightseeing. I also want to take lots of beautiful photos. I'm very excited for the trip.",q:{q:"What has already been reserved?",a:"Tickets and hotel",opts:["Only the hotel","Only the tickets","Tickets and hotel","Nothing yet"]}},
+  listening:[
+    {t:"パスポートを持ってきましたか。",tr:"Did you bring your passport?",q:"What is being asked about?",opts:["Ticket","Map","Passport","Money"],a:"Passport"},
+    {t:"次の電車は何時ですか。",tr:"What time is the next train?",q:"What is being asked?",opts:["Train platform","Train price","Train time","Train name"],a:"Train time"},
+    {t:"このホテルはとても快適です。",tr:"This hotel is very comfortable.",q:"How is the hotel described?",opts:["Expensive","Noisy","Comfortable","Small"],a:"Comfortable"},
+    {t:"旅行中に素晴らしい写真が撮れました。",tr:"I was able to take wonderful photos during the trip.",q:"What happened during the trip?",opts:["Lost passport","Took wonderful photos","Missed the flight","Forgot the map"],a:"Took wonderful photos"},
+  ]
+},
+];
 
-// ── State ──
-let lessonData=DEMO;
-let activeTab='vocab';
-let vocabView='flashcard';
-let fcIdx=0, fcFlipped=false;
-let listenIdx=0, listenAnswered=false, listenShow=false;
-let quizQ=[], quizIdx=0, quizAnswered=false, quizScore=0;
-let progress={score:0,streak:0,lastDate:'',totalScore:0,done:{}};
-let GEMINI_KEY='';
-const KS='jp_gkey', DS='jp_lesson', PS='jp_prog';
+// Fill remaining days 8-30 by cycling through the 7 base lessons with slight variation
+for(let d=7;d<30;d++){
+  const base=JSON.parse(JSON.stringify(LESSONS[d%7]));
+  base._day=d+1;
+  LESSONS.push(base);
+}
 
-// ── Safe storage ──
+// ═══════════════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════════════
+const PS='jp_prog2';
 const sto={
   get(k){try{return localStorage.getItem(k);}catch(e){return null;}},
   set(k,v){try{localStorage.setItem(k,v);}catch(e){}},
-  del(k){try{localStorage.removeItem(k);}catch(e){}},
   clear(){try{localStorage.clear();}catch(e){}}
 };
+
+let progress={score:0,streak:0,lastDate:'',totalScore:0,done:{},currentDay:0};
+let activeTab='vocab';
+let vocabView='flashcard';
+let fcIdx=0,fcFlipped=false;
+let listenIdx=0,listenAnswered=false,listenTrShow=false;
+let quizQ=[],quizIdx=0,quizAnswered=false,quizScore=0;
 
 // ── Boot ──
 (function init(){
   loadProg();
-  const key=sto.get(KS)||'';
-  if(key){
-    GEMINI_KEY=key;
-    // Try to load today's cached lesson
-    try{
-      const s=sto.get(DS);
-      if(s){
-        const p=JSON.parse(s);
-        if(p.date===new Date().toDateString()){lessonData=p.data;}
-        else{lessonData=DEMO;fetchLesson();}
-      } else {lessonData=DEMO;fetchLesson();}
-    }catch(e){lessonData=DEMO;}
-  } else {
-    // No key — show demo
-    document.getElementById('demoBanner').style.display='block';
-  }
+  updateUI();
   buildQuiz();
   renderTab();
   document.getElementById('dateDisp').textContent=new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 })();
 
-// ── Key ──
-function saveKeyAndBoot(){
-  const k=document.getElementById('keyInput').value.trim();
-  if(k.length<10){document.getElementById('keyError').textContent='Key too short.';document.getElementById('keyError').style.display='block';return;}
-  sto.set(KS,k);GEMINI_KEY=k;
-  document.getElementById('keyScreen').style.display='none';
-  fetchLesson();
-}
-function updateKey(){
-  const k=document.getElementById('sKeyInp').value.trim();
-  if(k.length<10){alert('Key too short.');return;}
-  sto.set(KS,k);GEMINI_KEY=k;
-  document.getElementById('sKeyInp').value='';
-  closeSett();sto.del(DS);fetchLesson();
-}
-function clearAll(){if(!confirm('Clear all data?'))return;sto.clear();location.reload();}
-function newLesson(){sto.del(DS);closeSett();lessonData=DEMO;fetchLesson();}
-
-// ── Settings ──
-function openSett(){
-  document.getElementById('stStreak').textContent=progress.streak+' days';
-  document.getElementById('stScore').textContent=progress.totalScore+' pts';
-  // Show all available TTS voices
-  const voices=window.speechSynthesis?window.speechSynthesis.getVoices():[];
-  const jpVoices=voices.filter(v=>v.lang.startsWith('ja'));
-  const vDiv=document.getElementById('voiceList');
-  if(vDiv){
-    if(jpVoices.length>0){
-      vDiv.innerHTML='<div style="color:#34d399;margin-bottom:4px">✅ Japanese voices found ('+jpVoices.length+'):</div>'+
-        jpVoices.map(v=>`<div style="font-size:11px;color:rgba(255,255,255,0.6);padding:2px 0">• ${v.name} (${v.lang})</div>`).join('');
-    } else {
-      vDiv.innerHTML='<div style="color:#f87171;margin-bottom:4px">❌ No Japanese voice found</div>'+
-        '<div style="font-size:11px;color:rgba(255,255,255,0.4)">All installed voices ('+voices.length+'):</div>'+
-        voices.slice(0,8).map(v=>`<div style="font-size:10px;color:rgba(255,255,255,0.4);padding:1px 0">• ${v.name} (${v.lang})</div>`).join('');
-    }
-  }
-  document.getElementById('sPanel').classList.add('open');
-  document.getElementById('sOverlay').classList.add('open');
-}
-function closeSett(){document.getElementById('sPanel').classList.remove('open');document.getElementById('sOverlay').classList.remove('open');}
-
 // ── Progress ──
 function loadProg(){
   try{const p=sto.get(PS);if(p)progress=JSON.parse(p);}catch(e){}
-  const t=new Date().toDateString();
-  if(progress.lastDate!==t){progress.score=0;progress.done={};progress.lastDate=t;saveProg();}
+  const today=new Date().toDateString();
+  if(progress.lastDate!==today){
+    progress.score=0;
+    progress.done={};
+    progress.lastDate=today;
+    // Auto advance day each new day
+    if(progress.streak>0) progress.currentDay=Math.min(29,progress.currentDay+1);
+    saveProg();
+  }
 }
 function saveProg(){sto.set(PS,JSON.stringify(progress));}
 function addScore(n){
   progress.score+=n;progress.totalScore+=n;
-  if(!progress.done[activeTab]){progress.done[activeTab]=true;progress.streak=Math.max(1,progress.streak);}
+  progress.done[activeTab]=true;
+  const keys=Object.keys(progress.done).length;
+  if(keys>=3) progress.streak=Math.max(progress.streak,1);
   saveProg();updateUI();
 }
 function updateUI(){
   document.getElementById('scoreDisp').textContent=progress.score;
   document.getElementById('streakBadge').textContent='🔥 '+progress.streak;
   document.getElementById('pFill').style.width=Math.min(100,Object.keys(progress.done).length*20)+'%';
+  const d=progress.currentDay||0;
+  document.getElementById('dayLabel').textContent=`📅 Day ${d+1} / 30`;
+  document.getElementById('prevDay').disabled=d===0;
+  document.getElementById('nextDay').disabled=d===29;
 }
 
-// ── Gemini fetch ──
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const PROMPT=`Generate a complete N4/N5 Japanese study lesson. Return ONLY valid raw JSON (no markdown fences, no explanation).
-{
-  "vocab":[{"kanji":"食べる","reading":"たべる","meaning":"to eat","example":"毎日ご飯を食べます。","example_en":"I eat rice every day.","type":"verb"}],
-  "grammar":[{"pattern":"〜たい","meaning":"Want to do","explanation":"...","examples":[{"jp":"...","en":"..."}]}],
-  "reading":{"title":"...","passage":"6-8 sentence passage","translation":"...","questions":[{"question":"...","answer":"...","options":["...","...","...","..."]}]},
-  "listening":[{"text":"Japanese sentence","translation":"...","question":"...","options":["...","...","...","..."],"answer":"..."}]
+function changeDay(dir){
+  const nd=(progress.currentDay||0)+dir;
+  if(nd<0||nd>29)return;
+  progress.currentDay=nd;
+  fcIdx=0;fcFlipped=false;listenIdx=0;listenAnswered=false;listenTrShow=false;
+  progress.done={};
+  saveProg();updateUI();buildQuiz();renderTab();
 }
-Include 10 vocab words, 3 grammar points, 1 reading passage with 1 question, 4 listening items. All N4/N5 level.`;
 
-async function fetchLesson(attempt=0){
-  if(!GEMINI_KEY) return;
-  if(lessonData===DEMO){
-    document.getElementById('content').innerHTML='<div style="text-align:center;padding:50px 20px"><div style="font-size:36px;margin-bottom:12px;opacity:0.5">🎌</div><p style="color:rgba(255,255,255,0.4);font-size:14px">Loading AI lesson…</p></div>';
-  }
-  try{
-    // Try direct first, then proxies
-    const urls=[
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      `https://corsproxy.io/?url=${encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`)}`,
-    ];
-    const body=JSON.stringify({
-      contents:[{role:'user',parts:[{text:PROMPT}]}],
-      generationConfig:{temperature:0.7,maxOutputTokens:3000}
-    });
-
-    let res=null;
-    for(const url of urls){
-      try{
-        res=await Promise.race([
-          fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body}),
-          new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),30000))
-        ]);
-        if(res && res.ok) break;
-        if(res && (res.status===400||res.status===401||res.status===403)) break;
-      }catch(e){ res=null; continue; }
-    }
-
-    if(!res) throw new Error('Cannot reach Gemini. Check your internet.');
-
-    if(res.status===429){
-      if(attempt<3){await sleep((attempt+1)*8000);return fetchLesson(attempt+1);}
-      throw new Error('Rate limit. Please wait a minute and try again.');
-    }
-    if(res.status===400||res.status===401||res.status===403){
-      const e=await res.json().catch(()=>({}));
-      throw new Error('Invalid API key: '+(e?.error?.message||res.status)+'. Tap ⚙ to update it.');
-    }
-    if(!res.ok) throw new Error(`Server error ${res.status}. Try again.`);
-
-    const data=await res.json();
-    const txt=(data?.candidates?.[0]?.content?.parts||[]).filter(p=>p.text).map(p=>p.text).join('');
-    if(!txt) throw new Error('Empty response. Try again.');
-
-    const m=txt.replace(/```json|```/g,'').trim().match(/\{[\s\S]*\}/);
-    if(!m) throw new Error('Could not parse lesson. Try again.');
-
-    lessonData=JSON.parse(m[0]);
-    sto.set(DS,JSON.stringify({date:new Date().toDateString(),data:lessonData}));
-    document.getElementById('demoBanner').style.display='none';
-    buildQuiz(); renderTab();
-
-  }catch(e){
-    showErr(e.message);
-    if(lessonData!==DEMO){ buildQuiz(); renderTab(); }
-  }
-}
-function showErr(msg){
-  document.getElementById('content').innerHTML=`
-    <div style="text-align:center;padding:40px 20px">
-      <div style="font-size:32px;margin-bottom:10px">⚠️</div>
-      <p style="color:#f87171;font-size:13px;margin-bottom:8px">${msg}</p>
-      <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-bottom:20px">Using demo lesson for now.</p>
-      <button onclick="fetchLesson(0)" style="background:linear-gradient(135deg,#c0392b,#922b21);border:none;border-radius:10px;color:#fff;padding:11px 28px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block;width:100%">🔄 Try Again</button>
-      <button onclick="openSett()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.6);padding:10px 28px;font-size:13px;cursor:pointer;width:100%">⚙ Check API Key</button>
-    </div>`;
-}
+function getLesson(){return LESSONS[progress.currentDay||0];}
 
 // ── Tabs ──
 function switchTab(t){
-  activeTab=t;fcIdx=0;fcFlipped=false;listenIdx=0;listenAnswered=false;listenShow=false;
+  activeTab=t;fcIdx=0;fcFlipped=false;listenIdx=0;listenAnswered=false;listenTrShow=false;
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tb-'+t).classList.add('active');
   renderTab();
 }
 function renderTab(){
   updateUI();
-  if(activeTab==='vocab')renderVocab();
-  else if(activeTab==='grammar')renderGrammar();
-  else if(activeTab==='reading')renderReading();
-  else if(activeTab==='listening')renderListening();
+  const l=getLesson();
+  if(activeTab==='vocab')renderVocab(l);
+  else if(activeTab==='grammar')renderGrammar(l);
+  else if(activeTab==='reading')renderReading(l);
+  else if(activeTab==='listening')renderListening(l);
   else if(activeTab==='quiz')renderQuiz();
 }
 
 // ── Vocab ──
-function renderVocab(){
-  const v=lessonData.vocab||[];
+function renderVocab(l){
+  const v=l.vocab||[];
   let h=`<div class="view-toggle">
-    <button class="vt-btn ${vocabView==='flashcard'?'active':''}" onclick="vocabView='flashcard';renderVocab()">🃏 Flashcard</button>
-    <button class="vt-btn ${vocabView==='list'?'active':''}" onclick="vocabView='list';renderVocab()">📋 List</button>
+    <button class="vt-btn ${vocabView==='flashcard'?'active':''}" onclick="vocabView='flashcard';renderTab()">🃏 Flashcard</button>
+    <button class="vt-btn ${vocabView==='list'?'active':''}" onclick="vocabView='list';renderTab()">📋 List</button>
   </div>`;
   if(vocabView==='flashcard'){
-    const w=v[fcIdx]||{};
+    const w=v[fcIdx];
     h+=`<div class="fc-nav">
-      <button class="fc-nav-btn" onclick="if(fcIdx>0){fcIdx--;fcFlipped=false;renderVocab()}" ${fcIdx===0?'disabled':''}>← Prev</button>
+      <button class="fc-nav-btn" onclick="if(fcIdx>0){fcIdx--;fcFlipped=false;renderTab()}" ${fcIdx===0?'disabled':''}>← Prev</button>
       <span class="fc-counter">${fcIdx+1} / ${v.length}</span>
-      <button class="fc-nav-btn" onclick="if(fcIdx<${v.length-1}){fcIdx++;fcFlipped=false;renderVocab()}" ${fcIdx===v.length-1?'disabled':''}>Next →</button>
+      <button class="fc-nav-btn" onclick="if(fcIdx<${v.length-1}){fcIdx++;fcFlipped=false;renderTab()}" ${fcIdx===v.length-1?'disabled':''}>Next →</button>
     </div>
-    <div class="flashcard-wrap" onclick="fcFlipped=!fcFlipped;document.getElementById('fc').className='flashcard'+(fcFlipped?' flipped':'')">
+    <div class="flashcard-wrap" onclick="fcFlipped=!fcFlipped;var fc=document.getElementById('fc');fc.className='flashcard'+(fcFlipped?' flipped':'')">
       <div class="flashcard" id="fc">
         <div class="fc-front">
-          <div class="fc-kanji">${w.kanji||''}</div>
-          <div class="fc-reading">${w.reading||''}</div>
+          <div class="fc-kanji">${w.k}</div>
+          <div class="fc-reading">${w.r}</div>
           <div class="fc-hint">Tap to reveal ✦</div>
         </div>
         <div class="fc-back">
-          <div class="fc-meaning">${w.meaning||''}</div>
-          <div class="fc-example">${w.example||''}<br/><span style="color:rgba(255,255,255,0.35);font-size:12px">${w.example_en||''}</span></div>
+          <div class="fc-meaning">${w.m}</div>
+          <div class="fc-example">${w.e}<br/><span style="color:rgba(255,255,255,0.35);font-size:12px">${w.ee}</span></div>
         </div>
       </div>
     </div>
-    <div style="display:flex;gap:8px;justify-content:center">
-      <button id="listenBtn" onclick="speakWithFeedback('${esc(w.kanji)}','listenBtn');addScore(2)" style="background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.25);border-radius:10px;color:#f87171;padding:8px 20px;cursor:pointer;font-size:13px;font-weight:600">🔊 Listen</button>
-      <button onclick="if(fcIdx<${v.length-1}){fcIdx++;fcFlipped=false;renderVocab();}addScore(1)" style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);border-radius:10px;color:#34d399;padding:8px 20px;cursor:pointer;font-size:13px;font-weight:600">✓ Got it</button>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:4px">
+      <button id="listenBtn" onclick="speakFB('${esc(w.k)}','listenBtn');addScore(2)" style="background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.25);border-radius:10px;color:#e74c3c;padding:8px 20px;cursor:pointer;font-size:13px;font-weight:600">🔊 Listen</button>
+      <button onclick="if(fcIdx<${v.length-1}){fcIdx++;fcFlipped=false;renderTab();}addScore(1)" style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);border-radius:10px;color:#34d399;padding:8px 20px;cursor:pointer;font-size:13px;font-weight:600">✓ Got it</button>
     </div>`;
   } else {
     h+=v.map(w=>`<div class="vocab-item">
-      <div class="vi-kanji">${w.kanji}</div>
+      <div class="vi-kanji">${w.k}</div>
       <div style="flex:1">
-        <div class="vi-reading">${w.reading}</div>
-        <div class="vi-meaning">${w.meaning}</div>
-        <div class="vi-example">${w.example} <span style="color:rgba(255,255,255,0.3)">${w.example_en}</span></div>
+        <div class="vi-reading">${w.r}</div>
+        <div class="vi-meaning">${w.m}</div>
+        <div class="vi-example">${w.e} <span style="color:rgba(255,255,255,0.3)">${w.ee}</span></div>
       </div>
-      <button class="speak-btn" onclick="speak('${esc(w.kanji)}')">🔊</button>
+      <button class="speak-btn" onclick="speak('${esc(w.k)}')">🔊</button>
     </div>`).join('');
   }
   document.getElementById('content').innerHTML=h;
 }
 
 // ── Grammar ──
-function renderGrammar(){
-  const g=lessonData.grammar||[];
+function renderGrammar(l){
+  const g=l.grammar||[];
   let h=g.map(i=>`<div class="grammar-card">
-    <div class="gc-pattern">${i.pattern}</div>
-    <div class="gc-meaning">${i.meaning}</div>
+    <div class="gc-pattern">${i.p}</div>
+    <div class="gc-meaning">${i.m}</div>
     <div class="gc-label">Explanation</div>
-    <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:12px;line-height:1.6">${i.explanation}</p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:12px;line-height:1.6">${i.ex}</p>
     <div class="gc-label">Examples</div>
-    ${(i.examples||[]).map(e=>`<div class="gc-example">
-      <div class="gc-jp">${e.jp} <button onclick="speak('${esc(e.jp)}')" style="background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.2);border-radius:6px;color:#f87171;padding:2px 8px;cursor:pointer;font-size:11px;margin-left:4px">🔊</button></div>
-      <div class="gc-en">${e.en}</div>
+    ${i.examples.map(e=>`<div class="gc-example">
+      <div class="gc-jp">${e.j} <button onclick="speak('${esc(e.j)}')" style="background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.2);border-radius:6px;color:#e74c3c;padding:2px 8px;cursor:pointer;font-size:11px;margin-left:4px">🔊</button></div>
+      <div class="gc-en">${e.e}</div>
     </div>`).join('')}
   </div>`).join('');
   h+=`<button class="mark-btn" onclick="addScore(5)">✓ Mark Grammar Complete (+5 pts)</button>`;
@@ -479,23 +495,20 @@ function renderGrammar(){
 }
 
 // ── Reading ──
-function renderReading(){
-  const r=lessonData.reading||{};
-  const q=(r.questions||[])[0]||null;
+function renderReading(l){
+  const r=l.reading;
   const done=progress.done['reading_q'];
   let h=`<div class="card">
-    <div style="font-size:11px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📖 ${r.title||'Reading'}</div>
-    <div class="reading-passage">${(r.passage||'').replace(/。/g,'。<br/>')}</div>
+    <div style="font-size:11px;font-weight:700;color:#e74c3c;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📖 ${r.title}</div>
+    <div class="reading-passage">${r.passage.replace(/。/g,'。<br/>')}</div>
     <button id="transBtn" onclick="var e=document.getElementById('trans');var b=document.getElementById('transBtn');if(e.style.display==='none'){e.style.display='block';b.textContent='Hide Translation';addScore(1);}else{e.style.display='none';b.textContent='Show Translation'}" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.5);padding:8px 16px;cursor:pointer;font-size:13px;margin-bottom:10px">Show Translation</button>
-    <div id="trans" style="display:none;background:rgba(0,0,0,0.2);border-radius:10px;padding:12px;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7">${r.translation||''}</div>
+    <div id="trans" style="display:none;background:rgba(0,0,0,0.2);border-radius:10px;padding:12px;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7">${r.tr}</div>
+  </div>
+  <div class="card">
+    <div class="quiz-question">❓ ${r.q.q}</div>
+    <div class="quiz-options">${r.q.opts.map(o=>`<button class="quiz-opt${done&&o===r.q.a?' correct':done?' wrong':''}" onclick="answerReading(this,'${esc(o)}','${esc(r.q.a)}')" ${done?'disabled':''}>${o}</button>`).join('')}</div>
+    ${done?`<div class="quiz-result correct">✓ ${r.q.a}</div>`:''}
   </div>`;
-  if(q){
-    h+=`<div class="card">
-      <div class="quiz-question">❓ ${q.question}</div>
-      <div class="quiz-options">${(q.options||[]).map(o=>`<button class="quiz-opt${done&&o===q.answer?' correct':done?' wrong':''}" onclick="answerReading(this,'${esc(o)}','${esc(q.answer)}')" ${done?'disabled':''}>${o}</button>`).join('')}</div>
-      ${done?`<div class="quiz-result correct">✓ ${q.answer}</div>`:''}
-    </div>`;
-  }
   document.getElementById('content').innerHTML=h;
 }
 function answerReading(btn,chosen,correct){
@@ -504,32 +517,30 @@ function answerReading(btn,chosen,correct){
 }
 
 // ── Listening ──
-function renderListening(){
-  const items=lessonData.listening||[];
-  if(!items.length){document.getElementById('content').innerHTML='<p style="text-align:center;padding:40px;color:rgba(255,255,255,0.3)">No listening content.</p>';return;}
+function renderListening(l){
+  const items=l.listening||[];
   const item=items[listenIdx];
   let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <span style="font-size:13px;color:rgba(255,255,255,0.4)">${listenIdx+1} / ${items.length}</span>
     <div style="display:flex;gap:6px">
-      <button onclick="if(listenIdx>0){listenIdx--;listenAnswered=false;listenShow=false;renderListening()}" ${listenIdx===0?'disabled':''} style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.5);padding:5px 12px;cursor:pointer;font-size:12px">← Prev</button>
-      <button onclick="if(listenIdx<${items.length-1}){listenIdx++;listenAnswered=false;listenShow=false;renderListening()}" ${listenIdx===items.length-1?'disabled':''} style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.5);padding:5px 12px;cursor:pointer;font-size:12px">Next →</button>
+      <button onclick="if(listenIdx>0){listenIdx--;listenAnswered=false;listenTrShow=false;renderTab()}" ${listenIdx===0?'disabled':''} style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.5);padding:5px 12px;cursor:pointer;font-size:12px">← Prev</button>
+      <button onclick="if(listenIdx<${items.length-1}){listenIdx++;listenAnswered=false;listenTrShow=false;renderTab()}" ${listenIdx===items.length-1?'disabled':''} style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.5);padding:5px 12px;cursor:pointer;font-size:12px">Next →</button>
     </div>
   </div>
   <div class="listen-card">
     <div style="font-size:40px;margin-bottom:10px">🎧</div>
     <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:14px">Listen carefully then answer below</p>
-    <button class="listen-play-btn" onclick="speak('${esc(item.text)}');addScore(1)">▶ Play Audio</button>
-    <br/>
-    <button class="show-transcript-btn" onclick="listenShow=!listenShow;document.getElementById('ltrans').className='listen-transcript'+(listenShow?' show':'');this.textContent=listenShow?'Hide Text':'Show Text'">Show Text</button>
-    <div class="listen-transcript" id="ltrans">
-      <div style="font-size:16px;margin-bottom:5px">${item.text}</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.4)">${item.translation}</div>
+    <button class="listen-play-btn" onclick="speak('${esc(item.t)}');addScore(1)">▶ Play Audio</button><br/>
+    <button class="show-trans-btn" onclick="listenTrShow=!listenTrShow;document.getElementById('ltr').style.display=listenTrShow?'block':'none';this.textContent=listenTrShow?'Hide Text':'Show Text'">Show Text</button>
+    <div id="ltr" style="display:none;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;margin-top:10px;text-align:left">
+      <div style="font-size:16px;margin-bottom:5px">${item.t}</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.4)">${item.tr}</div>
     </div>
   </div>
   <div class="card">
-    <div class="quiz-question">❓ ${item.question}</div>
-    <div class="quiz-options">${(item.options||[]).map(o=>`<button class="quiz-opt${listenAnswered&&o===item.answer?' correct':listenAnswered?' wrong':''}" onclick="answerListen(this,'${esc(o)}','${esc(item.answer)}')" ${listenAnswered?'disabled':''}>${o}</button>`).join('')}</div>
-    ${listenAnswered?`<div class="quiz-result correct">✓ ${item.answer}</div>`:''}
+    <div class="quiz-question">❓ ${item.q}</div>
+    <div class="quiz-options">${item.opts.map(o=>`<button class="quiz-opt${listenAnswered&&o===item.a?' correct':listenAnswered?' wrong':''}" onclick="answerListen(this,'${esc(o)}','${esc(item.a)}')" ${listenAnswered?'disabled':''}>${o}</button>`).join('')}</div>
+    ${listenAnswered?`<div class="quiz-result correct">✓ ${item.a}</div>`:''}
   </div>`;
   document.getElementById('content').innerHTML=h;
 }
@@ -541,26 +552,24 @@ function answerListen(btn,chosen,correct){
 
 // ── Quiz ──
 function buildQuiz(){
-  const v=lessonData.vocab||[];
-  const l=lessonData.listening||[];
+  const l=getLesson();
   quizQ=[];
-  v.slice(0,5).forEach(w=>{
-    const wrong=v.filter(x=>x.kanji!==w.kanji).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.meaning);
-    quizQ.push({type:'vocab',jp:w.kanji+' ('+w.reading+')',question:'What does this mean?',answer:w.meaning,options:[w.meaning,...wrong].sort(()=>Math.random()-0.5)});
+  l.vocab.slice(0,5).forEach(w=>{
+    const wrong=l.vocab.filter(x=>x.k!==w.k).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.m);
+    quizQ.push({type:'vocab',jp:w.k+' ('+w.r+')',q:'What does this mean?',a:w.m,opts:[w.m,...wrong].sort(()=>Math.random()-0.5)});
   });
-  l.forEach(i=>quizQ.push({type:'listen',jp:i.text,question:i.question,answer:i.answer,options:i.options}));
+  l.listening.forEach(i=>quizQ.push({type:'listen',jp:i.t,q:i.q,a:i.a,opts:i.opts}));
   quizQ=quizQ.sort(()=>Math.random()-0.5);
   quizIdx=0;quizAnswered=false;quizScore=0;
 }
 function renderQuiz(){
-  if(!quizQ.length){buildQuiz();}
   if(quizIdx>=quizQ.length){
     const pct=Math.round(quizScore/quizQ.length*100);
     document.getElementById('content').innerHTML=`<div style="text-align:center;padding:50px 20px">
       <div style="font-size:60px;margin-bottom:14px">${pct>=70?'🎉':'📚'}</div>
-      <div style="font-size:28px;font-weight:900;color:#f87171;margin-bottom:8px">${quizScore}/${quizQ.length}</div>
+      <div style="font-size:28px;font-weight:900;color:#e74c3c;margin-bottom:8px">${quizScore}/${quizQ.length}</div>
       <div style="font-size:15px;color:rgba(255,255,255,0.5);margin-bottom:24px">${pct>=70?'よくできました！Great job!':'もっと練習！Keep practicing!'}</div>
-      <button onclick="buildQuiz();renderQuiz()" style="background:linear-gradient(135deg,#dc2626,#991b1b);border:none;border-radius:12px;padding:13px 30px;color:#fff;font-size:15px;font-weight:700;cursor:pointer">🔄 Retry Quiz</button>
+      <button onclick="buildQuiz();renderQuiz()" style="background:linear-gradient(135deg,#c0392b,#922b21);border:none;border-radius:12px;padding:13px 30px;color:#fff;font-size:15px;font-weight:700;cursor:pointer">🔄 Try Again</button>
     </div>`;
     addScore(quizScore*5);return;
   }
@@ -572,116 +581,88 @@ function renderQuiz(){
     </div>
     <div class="card">
       <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">${q.type==='vocab'?'📚 Vocabulary':'🎧 Listening'}</div>
-      ${q.type==='listen'?`<button onclick="speak('${esc(q.jp)}')" style="background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.25);border-radius:8px;color:#f87171;padding:7px 16px;cursor:pointer;font-size:13px;font-weight:600;margin-bottom:12px">▶ Play</button><br/>`:''}
+      ${q.type==='listen'?`<button onclick="speak('${esc(q.jp)}')" style="background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.25);border-radius:8px;color:#e74c3c;padding:7px 16px;cursor:pointer;font-size:13px;font-weight:600;margin-bottom:12px">▶ Play Audio</button><br/>`:''}
       <div class="quiz-jp">${q.jp}</div>
-      <div class="quiz-question">${q.question}</div>
-      <div class="quiz-options">${(q.options||[]).map(o=>`<button class="quiz-opt" onclick="answerQuiz(this,'${esc(o)}','${esc(q.answer)}')">${o}</button>`).join('')}</div>
+      <div class="quiz-question">${q.q}</div>
+      <div class="quiz-options">${q.opts.map(o=>`<button class="quiz-opt" onclick="answerQuiz(this,'${esc(o)}','${esc(q.a)}')">${o}</button>`).join('')}</div>
     </div>`;
 }
 function answerQuiz(btn,chosen,correct){
   if(quizAnswered)return;
   quizAnswered=true;
-  const correct_=correct;
-  document.querySelectorAll('.quiz-opt').forEach(b=>{b.disabled=true;b.className='quiz-opt '+(b.textContent.trim()===correct_?'correct':'wrong');});
-  if(chosen===correct_)quizScore++;
+  document.querySelectorAll('.quiz-opt').forEach(b=>{b.disabled=true;b.className='quiz-opt '+(b.textContent.trim()===correct?'correct':'wrong');});
+  if(chosen===correct)quizScore++;
   const res=document.createElement('div');
-  res.className='quiz-result '+(chosen===correct_?'correct':'wrong');
-  res.textContent=chosen===correct_?'✓ Correct! +5 pts':'✗ Answer: '+correct_;
+  res.className='quiz-result '+(chosen===correct?'correct':'wrong');
+  res.textContent=chosen===correct?'✓ Correct! +5 pts':'✗ Answer: '+correct;
   const nb=document.createElement('button');
-  nb.className='next-btn';nb.style.marginTop='10px';
+  nb.className='next-btn';
   nb.textContent=quizIdx+1<quizQ.length?'Next Question →':'See Results';
   nb.onclick=()=>{quizIdx++;quizAnswered=false;renderQuiz();};
   document.querySelector('.quiz-options').after(res);res.after(nb);
 }
 
-// ── Speech ──
-const isPreview = window.self !== window.top;
+// ── Settings ──
+function openSett(){
+  document.getElementById('stStreak').textContent=progress.streak+' days';
+  document.getElementById('stScore').textContent=progress.totalScore+' pts';
+  document.getElementById('stDay').textContent='Day '+(progress.currentDay+1);
+  const voices=window.speechSynthesis?window.speechSynthesis.getVoices():[];
+  const jpVoices=voices.filter(v=>v.lang.startsWith('ja'));
+  const vDiv=document.getElementById('voiceList');
+  vDiv.innerHTML=jpVoices.length>0
+    ?'<div style="color:#34d399;margin-bottom:4px">✅ Japanese voices ('+jpVoices.length+'):</div>'+jpVoices.map(v=>`<div style="font-size:11px;color:rgba(255,255,255,0.6);padding:1px 0">• ${v.name} (${v.lang})</div>`).join('')
+    :'<div style="color:#f87171">❌ No Japanese voice found</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px">Install Japanese TTS in phone Settings</div>';
+  document.getElementById('sPanel').classList.add('open');
+  document.getElementById('sOverlay').classList.add('open');
+}
+function closeSett(){document.getElementById('sPanel').classList.remove('open');document.getElementById('sOverlay').classList.remove('open');}
+function clearAll(){if(!confirm('Reset all progress?'))return;sto.clear();location.reload();}
 
-function speak(txt) {
-  if (!txt) return;
-  if (isPreview) { showSpeechToast(txt); return; }
-  if (!window.speechSynthesis) { showSpeechToast(txt); return; }
-
+function testSpeak(){
+  const voices=window.speechSynthesis?window.speechSynthesis.getVoices():[];
+  const jp=voices.find(v=>v.lang==='ja-JP')||voices.find(v=>v.lang.startsWith('ja'));
+  if(!jp){alert('No Japanese voice found.\n\nGo to Settings → Accessibility → Text to Speech → install Japanese language.');return;}
+  const u=new SpeechSynthesisUtterance('こんにちは！日本語の勉強を頑張りましょう！');
+  u.lang='ja-JP';u.rate=0.85;u.voice=jp;
   window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+  alert('Playing: こんにちは！\nVoice: '+jp.name);
+}
 
-  // Wait for voices to load then speak
-  const doSpeak = () => {
-    const voices = window.speechSynthesis.getVoices();
-
-    // Priority order for Japanese voices
-    const jpVoice =
-      voices.find(v => v.lang === 'ja-JP' && v.localService) ||   // prefer local Japanese
-      voices.find(v => v.lang === 'ja-JP') ||                      // any ja-JP
-      voices.find(v => v.lang === 'ja') ||                         // bare ja
-      voices.find(v => v.lang.startsWith('ja')) ||                 // ja-anything
-      voices.find(v => v.name.toLowerCase().includes('japanese')) ||// named Japanese
-      voices.find(v => v.name.includes('Kyoko')) ||                // Apple Japanese (iOS/Mac)
-      voices.find(v => v.name.includes('Otoya')) ||                // Apple Japanese male
-      voices.find(v => v.name.includes('O-ren')) ||               // another Apple voice
-      null;
-
-    const u = new SpeechSynthesisUtterance(txt);
-    u.lang = 'ja-JP';
-    u.rate = 0.8;
-    u.pitch = 1.0;
-
-    if (jpVoice) {
-      u.voice = jpVoice;
-      console.log('Using voice:', jpVoice.name, jpVoice.lang);
-    } else {
-      // No Japanese voice found — show toast with available voices
-      const list = voices.slice(0,5).map(v=>v.name+'('+v.lang+')').join(', ');
-      showSpeechToast(txt, '⚠ No Japanese voice found. Install Japanese TTS in your phone Settings. Available: ' + list);
-      return;
-    }
-
-    u.onerror = (e) => {
-      console.error('Speech error:', e);
-      showSpeechToast(txt, '⚠ Speech error. Check Japanese TTS is installed.');
-    };
+// ── Speech ──
+const isPreview=window.self!==window.top;
+function speak(txt){
+  if(!txt)return;
+  if(isPreview){showToast(txt);return;}
+  if(!window.speechSynthesis){showToast(txt);return;}
+  window.speechSynthesis.cancel();
+  const go=()=>{
+    const voices=window.speechSynthesis.getVoices();
+    const jp=voices.find(v=>v.lang==='ja-JP'&&v.localService)||voices.find(v=>v.lang==='ja-JP')||voices.find(v=>v.lang.startsWith('ja'))||voices.find(v=>v.name.includes('Kyoko'))||voices.find(v=>v.name.includes('Otoya'))||null;
+    const u=new SpeechSynthesisUtterance(txt);
+    u.lang='ja-JP';u.rate=0.8;u.pitch=1;
+    if(jp)u.voice=jp;
+    else{showToast(txt,'No Japanese voice found. Install Japanese TTS in Settings.');return;}
+    u.onerror=()=>showToast(txt,'Speech error. Check TTS settings.');
     window.speechSynthesis.speak(u);
   };
-
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) {
-    doSpeak();
-  } else {
-    // Voices not loaded yet
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.onvoiceschanged = null;
-      doSpeak();
-    };
-    setTimeout(doSpeak, 500); // fallback
-  }
+  const v=window.speechSynthesis.getVoices();
+  if(v.length>0)go();
+  else{window.speechSynthesis.onvoiceschanged=()=>{window.speechSynthesis.onvoiceschanged=null;go();};setTimeout(go,500);}
 }
-
-function speakWithFeedback(txt, btnId) {
-  const btn = document.getElementById(btnId);
-  if (btn) {
-    const o = btn.innerHTML;
-    btn.innerHTML = '🔈 Playing…';
-    btn.style.opacity = '0.6';
-    setTimeout(() => { btn.innerHTML = o; btn.style.opacity = '1'; }, 2500);
-  }
+function speakFB(txt,btnId){
+  const btn=document.getElementById(btnId);
+  if(btn){const o=btn.innerHTML;btn.innerHTML='🔈 Playing…';btn.style.opacity='0.6';setTimeout(()=>{btn.innerHTML=o;btn.style.opacity='1';},2500);}
   speak(txt);
 }
-
-function showSpeechToast(txt, extraMsg) {
-  let t = document.getElementById('speechToast');
-  if (!t) {
-    t = document.createElement('div');
-    t.id = 'speechToast';
-    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid rgba(248,113,113,0.3);border-radius:14px;padding:14px 20px;font-size:14px;color:#f1f5f9;z-index:9999;text-align:center;max-width:88%;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:opacity 0.3s;';
-    document.body.appendChild(t);
-  }
-  t.innerHTML = `<div style="font-size:24px;letter-spacing:3px;color:#f87171;margin-bottom:6px">${txt}</div>
-    <div style="font-size:11px;color:rgba(255,255,255,0.35)">${extraMsg || '🔊 Audio plays on your phone'}</div>`;
-  t.style.display = 'block'; t.style.opacity = '1';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.style.display = 'none', 300); }, 4000);
+function showToast(txt,extra){
+  let t=document.getElementById('spToast');
+  if(!t){t=document.createElement('div');t.id='spToast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid rgba(248,113,113,0.3);border-radius:14px;padding:14px 20px;font-size:14px;color:#f1f5f9;z-index:9999;text-align:center;max-width:88%;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:opacity 0.3s;';document.body.appendChild(t);}
+  t.innerHTML=`<div style="font-size:22px;letter-spacing:3px;color:#e74c3c;margin-bottom:5px">${txt}</div><div style="font-size:11px;color:rgba(255,255,255,0.35)">${extra||'🔊 Audio plays on your phone'}</div>`;
+  t.style.display='block';t.style.opacity='1';
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.style.display='none',300);},4000);
 }
-
-// ── Util ──
 function esc(s){return(s||'').replace(/'/g,"\\'").replace(/`/g,'\\`');}
 </script>
 </body>
