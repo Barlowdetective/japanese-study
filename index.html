@@ -332,45 +332,71 @@ const PROMPT=`Generate a complete N4/N5 Japanese study lesson. Return ONLY valid
 Include 10 vocab words, 3 grammar points, 1 reading passage with 1 question, 4 listening items. All N4/N5 level.`;
 
 async function fetchLesson(attempt=0){
-  if(!GEMINI_KEY)return;
-  // Show subtle loading only if no data yet
+  if(!GEMINI_KEY) return;
   if(lessonData===DEMO){
     document.getElementById('content').innerHTML='<div style="text-align:center;padding:50px 20px"><div style="font-size:36px;margin-bottom:12px;opacity:0.5">🎌</div><p style="color:rgba(255,255,255,0.4);font-size:14px">Loading AI lesson…</p></div>';
   }
   try{
-    const res=await Promise.race([
-      fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({contents:[{role:'user',parts:[{text:PROMPT}]}],generationConfig:{temperature:0.7,maxOutputTokens:3000}})
-      }),
-      new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),25000))
-    ]);
-    if(res.status===429&&attempt<3){await sleep((attempt+1)*8000);return fetchLesson(attempt+1);}
-    if(!res.ok){
-      const e=await res.json().catch(()=>({}));
-      showErr(e?.error?.message||'API error '+res.status);return;
+    // Try direct first, then proxies
+    const urls=[
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://corsproxy.io/?url=${encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`)}`,
+    ];
+    const body=JSON.stringify({
+      contents:[{role:'user',parts:[{text:PROMPT}]}],
+      generationConfig:{temperature:0.7,maxOutputTokens:3000}
+    });
+
+    let res=null;
+    for(const url of urls){
+      try{
+        res=await Promise.race([
+          fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body}),
+          new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),30000))
+        ]);
+        if(res && res.ok) break;
+        if(res && (res.status===400||res.status===401||res.status===403)) break;
+      }catch(e){ res=null; continue; }
     }
+
+    if(!res) throw new Error('Cannot reach Gemini. Check your internet.');
+
+    if(res.status===429){
+      if(attempt<3){await sleep((attempt+1)*8000);return fetchLesson(attempt+1);}
+      throw new Error('Rate limit. Please wait a minute and try again.');
+    }
+    if(res.status===400||res.status===401||res.status===403){
+      const e=await res.json().catch(()=>({}));
+      throw new Error('Invalid API key: '+(e?.error?.message||res.status)+'. Tap ⚙ to update it.');
+    }
+    if(!res.ok) throw new Error(`Server error ${res.status}. Try again.`);
+
     const data=await res.json();
     const txt=(data?.candidates?.[0]?.content?.parts||[]).filter(p=>p.text).map(p=>p.text).join('');
-    if(!txt){showErr('Empty response from Gemini.');return;}
+    if(!txt) throw new Error('Empty response. Try again.');
+
     const m=txt.replace(/```json|```/g,'').trim().match(/\{[\s\S]*\}/);
-    if(!m){showErr('Could not parse lesson. Try again.');return;}
-    const parsed=JSON.parse(m[0]);
-    lessonData=parsed;
-    sto.set(DS,JSON.stringify({date:new Date().toDateString(),data:parsed}));
+    if(!m) throw new Error('Could not parse lesson. Try again.');
+
+    lessonData=JSON.parse(m[0]);
+    sto.set(DS,JSON.stringify({date:new Date().toDateString(),data:lessonData}));
     document.getElementById('demoBanner').style.display='none';
-    buildQuiz();renderTab();
+    buildQuiz(); renderTab();
+
   }catch(e){
-    if(lessonData===DEMO){showErr(e.message);}
-    else{buildQuiz();renderTab();}// use cached/demo silently
+    showErr(e.message);
+    if(lessonData!==DEMO){ buildQuiz(); renderTab(); }
   }
 }
 function showErr(msg){
-  document.getElementById('content').innerHTML=`<div style="text-align:center;padding:50px 20px">
-    <p style="color:#f87171;font-size:14px;margin-bottom:14px">⚠ ${msg}</p>
-    <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-bottom:16px">Showing demo lesson. Tap below to retry.</p>
-    <button onclick="fetchLesson()" style="background:rgba(220,38,38,0.2);border:1px solid #dc2626;border-radius:10px;color:#f87171;padding:10px 24px;cursor:pointer;font-size:14px;font-weight:700;">🔄 Try Again</button>
-  </div>`;
+  document.getElementById('content').innerHTML=`
+    <div style="text-align:center;padding:40px 20px">
+      <div style="font-size:32px;margin-bottom:10px">⚠️</div>
+      <p style="color:#f87171;font-size:13px;margin-bottom:8px">${msg}</p>
+      <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-bottom:20px">Using demo lesson for now.</p>
+      <button onclick="fetchLesson(0)" style="background:linear-gradient(135deg,#c0392b,#922b21);border:none;border-radius:10px;color:#fff;padding:11px 28px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block;width:100%">🔄 Try Again</button>
+      <button onclick="openSett()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.6);padding:10px 28px;font-size:13px;cursor:pointer;width:100%">⚙ Check API Key</button>
+    </div>`;
 }
 
 // ── Tabs ──
