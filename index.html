@@ -548,42 +548,90 @@ function answerQuiz(btn,chosen,correct){
 }
 
 // ── Speech ──
-const isPreview=window.self!==window.top; // inside iframe = preview mode
+const isPreview = window.self !== window.top;
 
-function speak(txt){
-  if(!txt) return;
-  if(isPreview){showSpeechToast(txt);return;}
-  if(!window.speechSynthesis){showSpeechToast(txt);return;}
+function speak(txt) {
+  if (!txt) return;
+  if (isPreview) { showSpeechToast(txt); return; }
+  if (!window.speechSynthesis) { showSpeechToast(txt); return; }
+
   window.speechSynthesis.cancel();
-  const trySpeak=()=>{
-    const u=new SpeechSynthesisUtterance(txt);
-    u.lang='ja-JP'; u.rate=0.8; u.pitch=1;
-    const voices=window.speechSynthesis.getVoices();
-    const jpVoice=voices.find(v=>v.lang==='ja-JP')||voices.find(v=>v.lang.startsWith('ja'))||null;
-    if(jpVoice) u.voice=jpVoice;
-    u.onerror=()=>showSpeechToast(txt);
+
+  // Wait for voices to load then speak
+  const doSpeak = () => {
+    const voices = window.speechSynthesis.getVoices();
+
+    // Priority order for Japanese voices
+    const jpVoice =
+      voices.find(v => v.lang === 'ja-JP' && v.localService) ||   // prefer local Japanese
+      voices.find(v => v.lang === 'ja-JP') ||                      // any ja-JP
+      voices.find(v => v.lang === 'ja') ||                         // bare ja
+      voices.find(v => v.lang.startsWith('ja')) ||                 // ja-anything
+      voices.find(v => v.name.toLowerCase().includes('japanese')) ||// named Japanese
+      voices.find(v => v.name.includes('Kyoko')) ||                // Apple Japanese (iOS/Mac)
+      voices.find(v => v.name.includes('Otoya')) ||                // Apple Japanese male
+      voices.find(v => v.name.includes('O-ren')) ||               // another Apple voice
+      null;
+
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang = 'ja-JP';
+    u.rate = 0.8;
+    u.pitch = 1.0;
+
+    if (jpVoice) {
+      u.voice = jpVoice;
+      console.log('Using voice:', jpVoice.name, jpVoice.lang);
+    } else {
+      // No Japanese voice found — show toast with available voices
+      const list = voices.slice(0,5).map(v=>v.name+'('+v.lang+')').join(', ');
+      showSpeechToast(txt, '⚠ No Japanese voice found. Install Japanese TTS in your phone Settings. Available: ' + list);
+      return;
+    }
+
+    u.onerror = (e) => {
+      console.error('Speech error:', e);
+      showSpeechToast(txt, '⚠ Speech error. Check Japanese TTS is installed.');
+    };
     window.speechSynthesis.speak(u);
   };
-  const voices=window.speechSynthesis.getVoices();
-  if(voices.length>0){trySpeak();}
-  else{window.speechSynthesis.onvoiceschanged=()=>{window.speechSynthesis.onvoiceschanged=null;trySpeak();};setTimeout(trySpeak,400);}
+
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    doSpeak();
+  } else {
+    // Voices not loaded yet
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.onvoiceschanged = null;
+      doSpeak();
+    };
+    setTimeout(doSpeak, 500); // fallback
+  }
 }
 
-function speakWithFeedback(txt,btnId){
-  const btn=document.getElementById(btnId);
-  if(btn){const o=btn.innerHTML;btn.innerHTML='🔈 Playing…';btn.style.opacity='0.6';setTimeout(()=>{btn.innerHTML=o;btn.style.opacity='1';},2200);}
+function speakWithFeedback(txt, btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    const o = btn.innerHTML;
+    btn.innerHTML = '🔈 Playing…';
+    btn.style.opacity = '0.6';
+    setTimeout(() => { btn.innerHTML = o; btn.style.opacity = '1'; }, 2500);
+  }
   speak(txt);
 }
 
-function showSpeechToast(txt){
-  let t=document.getElementById('speechToast');
-  if(!t){t=document.createElement('div');t.id='speechToast';
-    t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid rgba(248,113,113,0.3);border-radius:14px;padding:12px 20px;font-size:14px;color:#f1f5f9;z-index:999;text-align:center;max-width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.5);';
-    document.body.appendChild(t);}
-  t.innerHTML=`<div style="font-size:22px;letter-spacing:3px;color:#f87171;margin-bottom:4px">${txt}</div><div style="font-size:11px;color:rgba(255,255,255,0.35)">🔊 Audio plays on your phone (not in preview)</div>`;
-  t.style.display='block';t.style.opacity='1';
+function showSpeechToast(txt, extraMsg) {
+  let t = document.getElementById('speechToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'speechToast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid rgba(248,113,113,0.3);border-radius:14px;padding:14px 20px;font-size:14px;color:#f1f5f9;z-index:9999;text-align:center;max-width:88%;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:opacity 0.3s;';
+    document.body.appendChild(t);
+  }
+  t.innerHTML = `<div style="font-size:24px;letter-spacing:3px;color:#f87171;margin-bottom:6px">${txt}</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.35)">${extraMsg || '🔊 Audio plays on your phone'}</div>`;
+  t.style.display = 'block'; t.style.opacity = '1';
   clearTimeout(t._timer);
-  t._timer=setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.style.display='none',400);},3000);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.style.display = 'none', 300); }, 4000);
 }
 
 // ── Util ──
