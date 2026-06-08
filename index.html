@@ -142,7 +142,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="s-btn" style="background:rgba(220,38,38,0.15);border-color:#dc2626;color:#f87171" onclick="updateKey()">✓ Update</button>
   </div>
   <div>
-    <div class="s-label">Lesson</div>
+    <div class="s-label">🔊 TTS 语音诊断</div>
+    <div id="voiceList" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7">
+      点击设置按钮加载…
+    </div>
+    <button class="s-btn" style="background:rgba(52,211,153,0.1);border-color:#34d399;color:#34d399;margin-top:6px" onclick="testSpeak()">▶ 测试日语发音</button>
+  </div>
     <button class="s-btn" style="background:rgba(251,191,36,0.1);border-color:#fbbf24;color:#fbbf24" onclick="newLesson()">🔄 Generate New Lesson</button>
   </div>
   <div style="margin-top:auto">
@@ -276,6 +281,20 @@ function newLesson(){sto.del(DS);closeSett();lessonData=DEMO;fetchLesson();}
 function openSett(){
   document.getElementById('stStreak').textContent=progress.streak+' days';
   document.getElementById('stScore').textContent=progress.totalScore+' pts';
+  // Show all available TTS voices
+  const voices=window.speechSynthesis?window.speechSynthesis.getVoices():[];
+  const jpVoices=voices.filter(v=>v.lang.startsWith('ja'));
+  const vDiv=document.getElementById('voiceList');
+  if(vDiv){
+    if(jpVoices.length>0){
+      vDiv.innerHTML='<div style="color:#34d399;margin-bottom:4px">✅ Japanese voices found ('+jpVoices.length+'):</div>'+
+        jpVoices.map(v=>`<div style="font-size:11px;color:rgba(255,255,255,0.6);padding:2px 0">• ${v.name} (${v.lang})</div>`).join('');
+    } else {
+      vDiv.innerHTML='<div style="color:#f87171;margin-bottom:4px">❌ No Japanese voice found</div>'+
+        '<div style="font-size:11px;color:rgba(255,255,255,0.4)">All installed voices ('+voices.length+'):</div>'+
+        voices.slice(0,8).map(v=>`<div style="font-size:10px;color:rgba(255,255,255,0.4);padding:1px 0">• ${v.name} (${v.lang})</div>`).join('');
+    }
+  }
   document.getElementById('sPanel').classList.add('open');
   document.getElementById('sOverlay').classList.add('open');
 }
