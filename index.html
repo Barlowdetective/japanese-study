@@ -498,10 +498,24 @@ function renderGrammar(l){
 function renderReading(l){
   const r=l.reading;
   const done=progress.done['reading_q'];
+  // Split passage into sentences for per-sentence pronunciation
+  const sentences=r.passage.match(/[^。！？]+[。！？]/g)||[r.passage];
+  const passageHTML=sentences.map((s,i)=>
+    `<span style="display:inline">${s}
+      <button onclick="speak('${esc(s)}')" style="background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.2);border-radius:5px;color:#e74c3c;padding:1px 7px;cursor:pointer;font-size:11px;vertical-align:middle;margin:0 2px 4px">🔊</button>
+    </span>`
+  ).join(' ');
+
   let h=`<div class="card">
-    <div style="font-size:11px;font-weight:700;color:#e74c3c;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📖 ${r.title}</div>
-    <div class="reading-passage">${r.passage.replace(/。/g,'。<br/>')}</div>
-    <button id="transBtn" onclick="var e=document.getElementById('trans');var b=document.getElementById('transBtn');if(e.style.display==='none'){e.style.display='block';b.textContent='Hide Translation';addScore(1);}else{e.style.display='none';b.textContent='Show Translation'}" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.5);padding:8px 16px;cursor:pointer;font-size:13px;margin-bottom:10px">Show Translation</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:#e74c3c;text-transform:uppercase;letter-spacing:1px">📖 ${r.title}</div>
+      <button onclick="speak('${esc(r.passage)}')" style="background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.25);border-radius:8px;color:#e74c3c;padding:5px 12px;cursor:pointer;font-size:12px;font-weight:600;white-space:nowrap">🔊 Read All</button>
+    </div>
+    <div class="reading-passage" style="line-height:2.6">${passageHTML}</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <button id="transBtn" onclick="var e=document.getElementById('trans');var b=document.getElementById('transBtn');if(e.style.display==='none'){e.style.display='block';b.textContent='Hide Translation';addScore(1);}else{e.style.display='none';b.textContent='Show Translation'}" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.5);padding:8px 16px;cursor:pointer;font-size:13px">Show Translation</button>
+      <button onclick="speak('${esc(r.passage)}');addScore(1)" style="background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.2);border-radius:8px;color:#e74c3c;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600">🔊 Listen Again</button>
+    </div>
     <div id="trans" style="display:none;background:rgba(0,0,0,0.2);border-radius:10px;padding:12px;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7">${r.tr}</div>
   </div>
   <div class="card">
