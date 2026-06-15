@@ -127,6 +127,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="day-nav">
       <button class="day-nav-btn" id="prevDay" onclick="changeDay(-1)">← Prev</button>
       <button class="day-nav-btn" id="nextDay" onclick="changeDay(1)">Next →</button>
+      <button class="day-nav-btn" onclick="openDayPicker()" style="background:rgba(251,191,36,0.15);border-color:#fbbf24;color:#fbbf24">📅 Jump</button>
+    </div>
+  </div>
+
+  <!-- Day Picker Modal -->
+  <div id="dayPickerOverlay" onclick="closeDayPicker()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:300;align-items:center;justify-content:center;">
+    <div onclick="event.stopPropagation()" style="background:#1e1010;border:1px solid rgba(192,57,43,0.3);border-radius:20px;padding:24px;width:90%;max-width:340px;max-height:80vh;overflow-y:auto;">
+      <div style="font-size:15px;font-weight:700;color:#e74c3c;margin-bottom:16px;text-align:center">📅 Select Day</div>
+      <div id="dayGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;"></div>
+      <button onclick="closeDayPicker()" style="width:100%;margin-top:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.5);padding:10px;cursor:pointer;font-size:13px;font-weight:600">Cancel</button>
     </div>
   </div>
   <div class="tabs">
@@ -409,6 +419,7 @@ function changeDay(dir){
   progress.currentDay=nd;
   fcIdx=0;fcFlipped=false;listenIdx=0;listenAnswered=false;listenTrShow=false;
   progress.done={};
+  progress.score=0;
   saveProg();updateUI();buildQuiz();renderTab();
 }
 
@@ -616,7 +627,33 @@ function answerQuiz(btn,chosen,correct){
   document.querySelector('.quiz-options').after(res);res.after(nb);
 }
 
-// ── Settings ──
+function openDayPicker(){
+  const grid=document.getElementById('dayGrid');
+  const cur=progress.currentDay||0;
+  grid.innerHTML='';
+  for(let i=0;i<30;i++){
+    const btn=document.createElement('button');
+    btn.textContent=i+1;
+    btn.style.cssText=`padding:10px 0;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:1px solid;transition:all 0.2s;
+      background:${i===cur?'#c0392b':'rgba(255,255,255,0.05)'};
+      border-color:${i===cur?'#c0392b':'rgba(255,255,255,0.1)'};
+      color:${i===cur?'#fff':'rgba(255,255,255,0.6)'};`;
+    btn.onclick=()=>jumpToDay(i);
+    grid.appendChild(btn);
+  }
+  document.getElementById('dayPickerOverlay').style.display='flex';
+}
+function closeDayPicker(){
+  document.getElementById('dayPickerOverlay').style.display='none';
+}
+function jumpToDay(d){
+  progress.currentDay=d;
+  fcIdx=0;fcFlipped=false;listenIdx=0;listenAnswered=false;listenTrShow=false;
+  progress.done={};
+  progress.score=0;
+  saveProg();updateUI();buildQuiz();renderTab();
+  closeDayPicker();
+}
 function openSett(){
   document.getElementById('stStreak').textContent=progress.streak+' days';
   document.getElementById('stScore').textContent=progress.totalScore+' pts';
